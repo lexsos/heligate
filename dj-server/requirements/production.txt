@@ -1,0 +1,4 @@
+--requirement=common.txt
+
+psycopg2==2.5.1
+gunicorn==18.0
