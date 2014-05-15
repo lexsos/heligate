@@ -94,6 +94,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 PROJECT_APPS = (
+    'accounts',
 )
 
 INSTALLED_APPS = (
