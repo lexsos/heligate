@@ -95,6 +95,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 PROJECT_APPS = (
     'accounts',
+    'accounts_static_ip',
 )
 
 INSTALLED_APPS = (
