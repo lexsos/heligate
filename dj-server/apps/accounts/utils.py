@@ -7,7 +7,8 @@ def user_reg_ip4(user, ip_address, priority=0):
     # если уже есть запись с таким пользователем и ip адресом
     if entries.exists():
         entry = entries[0]
-        entry.priority = priority
+        # Приоритет можно только повышать
+        entry.priority = max(priority, entry.priority)
         entry.save()
         return 0
     else:

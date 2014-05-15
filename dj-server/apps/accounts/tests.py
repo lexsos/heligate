@@ -177,3 +177,23 @@ class UserRegIp4TestCase(TestCase):
             Ip4Entry.objects.filter(ip_address='1.1.1.3', user=user2).count(),
             1
         )
+
+    def test_decrease_priority(self):
+
+        user = User.objects.filter(username='user1')[0]
+
+        status = user_reg_ip4(user, '1.1.1.1', 100)
+        self.assertEqual(status, 0)
+
+        status = user_reg_ip4(user, '1.1.1.1', 0)
+        self.assertEqual(status, 0)
+
+        self.assertEqual(Ip4Entry.objects.all().count(), 1)
+        self.assertEqual(
+            Ip4Entry.objects.filter(
+                ip_address='1.1.1.1',
+                user=user,
+                priority=100
+            ).count(),
+            1
+        )
