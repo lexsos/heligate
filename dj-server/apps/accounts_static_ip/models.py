@@ -28,5 +28,3 @@ class StaticIp4(models.Model):
         verbose_name_plural = _('static ip4 items')
         verbose_name = _('static ip4 item')
         ordering = ['user', 'ip_address']
-
-
