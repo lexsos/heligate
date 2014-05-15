@@ -26,10 +26,9 @@ def user_reg_ip4(user, ip_address, priority=0):
         max_count = user.profile.max_ip4_entry
         if current_count >= max_count:
             to_del_count = current_count - max_count + 1
-            entries = Ip4Entry.objects.filter(
-                user=user,
-                priority__lte=priority,
-            ).order_by('priority', 'update_date')
+            entries = Ip4Entry.objects.filter(user=user)
+            entries = entries.filter(priority__lte=priority)
+            entries = entries.order_by('priority', 'update_date')
             if to_del_count > entries.count():
                 return 1
             else:
