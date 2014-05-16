@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+
+{% block user_active %}active{% endblock %}
+
+
+{% block main_content %}
+
+    <div class="page-title">
+        <span>Добавление нового пользователя</span>
+    </div>
+
+    <form role="form" class="form-horizontal">
+
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label">Имя учетной записи</label>
+        <div class="col-sm-2">
+          <input class="form-control" id="" >
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label">ФИО</label>
+        <div class="col-sm-5">
+          <input class="form-control" id="" >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label">Максимально количество привязок Ip4</label>
+        <div class="col-sm-1">
+          <input class="form-control" id="">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label">Активный</label>
+        <div class="col-sm-1">
+          <input type="checkbox" value="">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label">Администратор</label>
+        <div class="col-sm-1">
+          <input type="checkbox" value="">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label">Статический ip адрес</label>
+        <div class="col-sm-2">
+          <input class="form-control" id="">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label">Создать ключ динамической привязки</label>
+        <div class="col-sm-1">
+          <input type="checkbox" value="">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label">Группа</label>
+        <div class="col-sm-3">
+          <select class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </div>
+      </div>
+
+    </form>
+{% endblock %}

@@ -1,0 +1,10 @@
+body {
+    padding-top: 70px;
+}
+
+.page-title {
+    color: #999999;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-family: Helvetica,​Arial,​sans-serif;
+}
