@@ -12,7 +12,7 @@ class DynamicAccounts(models.Model):
         verbose_name=_('user'),
     )
     secret = models.TextField(
-        verbose_name=_('secret'),
+        verbose_name=_('secret key'),
         help_text=_('shared secret key'),
         default=generate_key,
     )
