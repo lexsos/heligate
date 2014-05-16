@@ -3,8 +3,11 @@ from .models import Ip4Entry
 
 
 def user_reg_ip4(user, ip_address, priority=0):
-    entries = Ip4Entry.objects.filter(user=user, ip_address=ip_address)
+    # Проверим активен ли пользователь
+    if not user.is_active:
+        return 1
     # если уже есть запись с таким пользователем и ip адресом
+    entries = Ip4Entry.objects.filter(user=user, ip_address=ip_address)
     if entries.exists():
         entry = entries[0]
         # Приоритет можно только повышать
