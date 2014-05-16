@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 
 class Ip4Entry(models.Model):
@@ -50,6 +50,10 @@ class Profile(models.Model):
     max_ip4_entry = models.PositiveIntegerField(
         verbose_name=_('max count of ip4 entries'),
         default=1,
+    )
+    group = models.ForeignKey(
+        Group,
+        verbose_name=_('group'),
     )
 
     def __unicode__(self):
