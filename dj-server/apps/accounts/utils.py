@@ -46,3 +46,10 @@ def user_reg_ip4(user, ip_address, priority=0):
         )
         entries.save()
         return 0
+
+
+def user_unreg_ip(user, ip_address=None):
+    entries = Ip4Entry.objects.filter(user=user)
+    if not ip_address is None:
+        entries = entries.filter(ip_address=ip_address)
+    entries.delete()
