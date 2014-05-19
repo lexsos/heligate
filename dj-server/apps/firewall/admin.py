@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (
-    IpFilter,
+    ClassifierSet,
     NetInterface,
     Classifier,
     RuleSet,
@@ -9,12 +9,18 @@ from .models import (
 )
 
 
-class IpFilterAdmin(admin.ModelAdmin):
+class ClassifierInline(admin.StackedInline):
+    model = Classifier
+    extra = 5
+
+
+class ClassifierSetAdmin(admin.ModelAdmin):
 
     list_display = (
         'name',
         'description',
     )
+    inlines = [ClassifierInline, ]
 
 
 class NetInterfaceAdmin(admin.ModelAdmin):
@@ -28,12 +34,12 @@ class NetInterfaceAdmin(admin.ModelAdmin):
 class ClassifierAdmin(admin.ModelAdmin):
 
     list_filter = (
-        'ip_filter',
+        'classifier_set',
         'ip_version',
         'protocol',
     )
     list_display = (
-        'ip_filter',
+        'classifier_set',
         'ip_version',
         'protocol',
         'src_ip',
@@ -54,7 +60,6 @@ class RuleSetAdmin(admin.ModelAdmin):
         'group',
         'default_action',
     )
-
     inlines = [IpRuleInline, ]
 
 
@@ -67,14 +72,14 @@ class IpRuleAdmin(admin.ModelAdmin):
     )
     list_display = (
         'rule_set',
-        'ip_filter',
+        'classifier_set',
         'action',
         'enabled',
         'weight',
     )
 
 
-admin.site.register(IpFilter, IpFilterAdmin)
+admin.site.register(ClassifierSet, ClassifierSetAdmin)
 admin.site.register(NetInterface, NetInterfaceAdmin)
 admin.site.register(Classifier, ClassifierAdmin)
 admin.site.register(RuleSet, RuleSetAdmin)

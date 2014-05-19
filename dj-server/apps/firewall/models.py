@@ -2,45 +2,40 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import Group
 
+from .patterns import (
+    IP_VERSION_4, IP_VERSION_6,
+    PROTOCOL_TYPE_TCP, PROTOCOL_TYPE_UDP, PROTOCOL_TYPE_ICMP,
+    ICMP_ANY, ICMP_ECHO_REP, ICMP_ECHO_REQ,
+    ACTION_DENY, ACTION_ALLOW,
+)
+from .utils import get_ipt_params
 
-IP_VERSION_4 = 'ipv4'
-IP_VERSION_6 = 'ipv6'
+
 IP_VERSION = (
     (IP_VERSION_4, _('ip version 4')),
     (IP_VERSION_6, _('ip version 6')),
 )
-
-PROTOCOL_TYPE_TCP = 'tcp'
-PROTOCOL_TYPE_UDP = 'udp'
-PROTOCOL_TYPE_ICMP = 'icmp'
 PROTOCOL_TYPE = (
     (PROTOCOL_TYPE_TCP, 'TCP'),
     (PROTOCOL_TYPE_UDP, 'UDP'),
     (PROTOCOL_TYPE_ICMP, 'ICMP'),
 )
-
-ICMP_ANY = 'any'
-ICMP_ECHO_REP = 'echo-reply'
-ICMP_ECHO_REQ = 'echo-request'
 ICMP_TYPE = (
     (ICMP_ANY, _('any')),
     (ICMP_ECHO_REP, _('echo reply')),
     (ICMP_ECHO_REQ, _('echo request')),
 )
-
-ACTION_DENY = 'deny'
-ACTION_ALLOW = 'allow'
 ACTION = (
     (ACTION_DENY, _('deny')),
     (ACTION_ALLOW, _('allow')),
 )
 
 
-class IpFilter(models.Model):
+class ClassifierSet(models.Model):
 
     name = models.CharField(
         max_length=255,
-        verbose_name=_('filter name'),
+        verbose_name=_('classifier set name'),
         unique=True,
     )
     description = models.CharField(
@@ -53,8 +48,8 @@ class IpFilter(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = _('ip filters items')
-        verbose_name = _('ip filter item')
+        verbose_name_plural = _('classifier sets items')
+        verbose_name = _('classifier set item')
         ordering = ['name']
 
 
@@ -80,9 +75,9 @@ class NetInterface(models.Model):
 
 class Classifier(models.Model):
 
-    ip_filter = models.ForeignKey(
-        IpFilter,
-        verbose_name=_('ip filter'),
+    classifier_set = models.ForeignKey(
+        ClassifierSet,
+        verbose_name=_('classifier set item'),
     )
     ip_version = models.CharField(
         max_length=255,
@@ -94,7 +89,8 @@ class Classifier(models.Model):
         max_length=255,
         verbose_name=_('protocol type'),
         choices=PROTOCOL_TYPE,
-        default=PROTOCOL_TYPE_TCP
+        default=PROTOCOL_TYPE_TCP,
+        blank=True,
     )
     src_ip = models.CharField(
         max_length=255,
@@ -137,13 +133,16 @@ class Classifier(models.Model):
         choices=ICMP_TYPE
     )
 
+    def iptables_params(self):
+        return get_ipt_params(self)
+
     def __unicode__(self):
         return u'{0}:{1}'.format(self.ip_version, self.protocol)
 
     class Meta:
         verbose_name_plural = _('classifieres items')
         verbose_name = _('classifier item')
-        ordering = ['ip_filter']
+        ordering = ['classifier_set']
 
 
 class RuleSet(models.Model):
@@ -156,7 +155,11 @@ class RuleSet(models.Model):
         max_length=255,
         choices=ACTION,
         verbose_name=_('default action'),
+        blank=True,
     )
+
+    def get_rules(self):
+        return self.iprule_set.filter(enabled=True)
 
     def __unicode__(self):
         return u'{0}:{1}'.format(self.group, self.default_action)
@@ -173,9 +176,9 @@ class IpRule(models.Model):
         RuleSet,
         verbose_name=_('ruleset item'),
     )
-    ip_filter = models.ForeignKey(
-        IpFilter,
-        verbose_name=_('ip filter'),
+    classifier_set = models.ForeignKey(
+        ClassifierSet,
+        verbose_name=_('classifier set item'),
     )
     action = models.CharField(
         max_length=255,
@@ -191,14 +194,17 @@ class IpRule(models.Model):
         default=0,
     )
 
+    def get_classifiers(self):
+        return self.classifier_set.classifier_set.all()
+
     def __unicode__(self):
         return u'{0}:{1}'.format(
             self.rule_set.group,
-            self.ip_filter.name,
+            self.classifier_set.name,
             self.action
         )
 
     class Meta:
         verbose_name_plural = _('iprules items')
         verbose_name = _('iprule item')
-        ordering = ['rule_set', '-weight', 'ip_filter']
+        ordering = ['rule_set', '-weight', 'classifier_set']
