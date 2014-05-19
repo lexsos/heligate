@@ -98,6 +98,7 @@ PROJECT_APPS = (
     'accounts_static_ip',
     'accounts_dynamic_ip',
     'accounts_web',
+    'firewall',
 )
 
 INSTALLED_APPS = (
