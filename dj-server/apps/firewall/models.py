@@ -186,11 +186,19 @@ class IpRule(models.Model):
         verbose_name=_('enabled'),
         default=True,
     )
+    weight = models.PositiveIntegerField(
+        verbose_name=_('weight'),
+        default=0,
+    )
 
     def __unicode__(self):
-        return u'{0}:{1}'.format(self.rule_set.group, self.ip_filter.name, self.action)
+        return u'{0}:{1}'.format(
+            self.rule_set.group,
+            self.ip_filter.name,
+            self.action
+        )
 
     class Meta:
         verbose_name_plural = _('iprules items')
         verbose_name = _('iprule item')
-        ordering = ['rule_set', 'ip_filter']
+        ordering = ['rule_set', '-weight', 'ip_filter']

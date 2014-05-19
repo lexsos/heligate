@@ -55,13 +55,14 @@ class RuleSetAdmin(admin.ModelAdmin):
         'default_action',
     )
 
-    inlines = [IpRuleInline,]
+    inlines = [IpRuleInline, ]
 
 
 class IpRuleAdmin(admin.ModelAdmin):
 
     list_filter = (
         'enabled',
+        'weight',
         'rule_set',
     )
     list_display = (
@@ -69,7 +70,9 @@ class IpRuleAdmin(admin.ModelAdmin):
         'ip_filter',
         'action',
         'enabled',
+        'weight',
     )
+
 
 admin.site.register(IpFilter, IpFilterAdmin)
 admin.site.register(NetInterface, NetInterfaceAdmin)

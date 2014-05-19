@@ -20,8 +20,7 @@ class DynamicAccounts(models.Model):
     def __unicode__(self):
         return self.user.username
 
-
     class Meta:
         verbose_name_plural = _('dynamic accounts items')
         verbose_name = _('dynamic account item')
-        ordering = ['user',]
+        ordering = ['user', ]
