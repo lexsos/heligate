@@ -1,0 +1,160 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-19 10:52+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: models.py:9
+msgid "ip version 4"
+msgstr "ip версии 4"
+
+#: models.py:10
+msgid "ip version 6"
+msgstr "ip версии 6"
+
+#: models.py:26
+msgid "any"
+msgstr "любой"
+
+#: models.py:27
+msgid "echo reply"
+msgstr "echo ответ"
+
+#: models.py:28
+msgid "echo request"
+msgstr "echo запрос"
+
+#: models.py:34
+msgid "deny"
+msgstr "запретить"
+
+#: models.py:35
+msgid "allow"
+msgstr "разрешить"
+
+#: models.py:43
+msgid "filter name"
+msgstr "имя фильта"
+
+#: models.py:48 models.py:69
+msgid "description"
+msgstr "описание"
+
+#: models.py:56
+msgid "ip filters items"
+msgstr "ip фильтры"
+
+#: models.py:57
+msgid "ip filter item"
+msgstr "ip фильтр"
+
+#: models.py:65
+msgid "interface name"
+msgstr "имя интерфейса"
+
+#: models.py:76
+msgid "net interfaces items"
+msgstr "сетевые интерфейсы"
+
+#: models.py:77
+msgid "net interface item"
+msgstr "сетевой интерфейс"
+
+#: models.py:85 models.py:178
+msgid "ip filter"
+msgstr "ip фильтр"
+
+#: models.py:89
+msgid "ip protocol version"
+msgstr "версия протокола ip"
+
+#: models.py:95
+msgid "protocol type"
+msgstr "тип протокола"
+
+#: models.py:101
+msgid "source ip address"
+msgstr "ip адрес источника"
+
+#: models.py:106
+msgid "destination ip address"
+msgstr "ip адрес назначения"
+
+#: models.py:111
+msgid "input interface"
+msgstr "входной интерфейс"
+
+#: models.py:118
+msgid "output interface"
+msgstr "выходной интерфейс"
+
+#: models.py:125
+msgid "source ports"
+msgstr "порт источника"
+
+#: models.py:130
+msgid "destination ports"
+msgstr "порт назначения"
+
+#: models.py:135
+msgid "icmp type"
+msgstr "тип icmp"
+
+#: models.py:144
+msgid "classifieres items"
+msgstr "классификаторы"
+
+#: models.py:145
+msgid "classifier item"
+msgstr "классификатор"
+
+#: models.py:153
+msgid "group"
+msgstr "группа"
+
+#: models.py:158
+msgid "default action"
+msgstr "действие поумолчанию"
+
+#: models.py:165
+msgid "rulesets items"
+msgstr "наборы правил"
+
+#: models.py:166 models.py:174
+msgid "ruleset item"
+msgstr "набор правил"
+
+#: models.py:183
+msgid "action"
+msgstr "действие"
+
+#: models.py:186
+msgid "enabled"
+msgstr "включено"
+
+#: models.py:190
+msgid "weight"
+msgstr "вес"
+
+#: models.py:202
+msgid "iprules items"
+msgstr "правила"
+
+#: models.py:203
+msgid "iprule item"
+msgstr "правило"
