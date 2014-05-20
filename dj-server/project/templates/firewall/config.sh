@@ -52,6 +52,9 @@ $IPT4 -t filter -N group_classifier_b
 
 # Разрешаем прохождение установленых соединений
 $IPT4 -t filter -A  FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+# Распределяем трафик по группам
+$IPT4 -t filter -A  FORWARD -j group_classifier_a
+$IPT4 -t filter -A  FORWARD -j group_classifier_b
 
 
 # Разрешаем пересылку

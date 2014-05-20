@@ -39,3 +39,8 @@ def get_all_conf():
         }
         conf = render_to_string('firewall/config.sh', context)
         return normalize_script(conf)
+
+
+def get_update_classifier():
+        conf = render_to_string('firewall/update_classifier.sh')
+        return normalize_script(conf)
