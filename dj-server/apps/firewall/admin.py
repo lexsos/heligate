@@ -1,10 +1,10 @@
 from django.contrib import admin
 
 from .models import (
-    ClassifierSet,
+    ClassifierKit,
     NetInterface,
     Classifier,
-    RuleSet,
+    RuleKit,
     IpRule,
 )
 
@@ -14,7 +14,7 @@ class ClassifierInline(admin.StackedInline):
     extra = 5
 
 
-class ClassifierSetAdmin(admin.ModelAdmin):
+class ClassifierKitAdmin(admin.ModelAdmin):
 
     list_display = (
         'name',
@@ -34,12 +34,12 @@ class NetInterfaceAdmin(admin.ModelAdmin):
 class ClassifierAdmin(admin.ModelAdmin):
 
     list_filter = (
-        'classifier_set',
+        'classifier_kit',
         'ip_version',
         'protocol',
     )
     list_display = (
-        'classifier_set',
+        'classifier_kit',
         'ip_version',
         'protocol',
         'src_ip',
@@ -54,7 +54,7 @@ class IpRuleInline(admin.StackedInline):
     extra = 10
 
 
-class RuleSetAdmin(admin.ModelAdmin):
+class RuleKitAdmin(admin.ModelAdmin):
 
     list_display = (
         'group',
@@ -68,19 +68,19 @@ class IpRuleAdmin(admin.ModelAdmin):
     list_filter = (
         'enabled',
         'weight',
-        'rule_set',
+        'rule_kit',
     )
     list_display = (
-        'rule_set',
-        'classifier_set',
+        'rule_kit',
+        'classifier_kit',
         'action',
         'enabled',
         'weight',
     )
 
 
-admin.site.register(ClassifierSet, ClassifierSetAdmin)
+admin.site.register(ClassifierKit, ClassifierKitAdmin)
 admin.site.register(NetInterface, NetInterfaceAdmin)
 admin.site.register(Classifier, ClassifierAdmin)
-admin.site.register(RuleSet, RuleSetAdmin)
+admin.site.register(RuleKit, RuleKitAdmin)
 admin.site.register(IpRule, IpRuleAdmin)

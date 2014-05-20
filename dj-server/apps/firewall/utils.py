@@ -1,4 +1,3 @@
-from .patterns import ACTION_DENY, ACTION_ALLOW
 
 
 def get_ipt_params(classifier):

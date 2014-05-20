@@ -31,11 +31,11 @@ ACTION = (
 )
 
 
-class ClassifierSet(models.Model):
+class ClassifierKit(models.Model):
 
     name = models.CharField(
         max_length=255,
-        verbose_name=_('classifier set name'),
+        verbose_name=_('classifier kit name'),
         unique=True,
     )
     description = models.CharField(
@@ -48,8 +48,8 @@ class ClassifierSet(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = _('classifier sets items')
-        verbose_name = _('classifier set item')
+        verbose_name_plural = _('classifier kits items')
+        verbose_name = _('classifier kit item')
         ordering = ['name']
 
 
@@ -75,9 +75,9 @@ class NetInterface(models.Model):
 
 class Classifier(models.Model):
 
-    classifier_set = models.ForeignKey(
-        ClassifierSet,
-        verbose_name=_('classifier set item'),
+    classifier_kit = models.ForeignKey(
+        ClassifierKit,
+        verbose_name=_('classifier kit item'),
     )
     ip_version = models.CharField(
         max_length=255,
@@ -142,10 +142,10 @@ class Classifier(models.Model):
     class Meta:
         verbose_name_plural = _('classifieres items')
         verbose_name = _('classifier item')
-        ordering = ['classifier_set']
+        ordering = ['classifier_kit']
 
 
-class RuleSet(models.Model):
+class RuleKit(models.Model):
 
     group = models.OneToOneField(
         Group,
@@ -165,20 +165,20 @@ class RuleSet(models.Model):
         return u'{0}:{1}'.format(self.group, self.default_action)
 
     class Meta:
-        verbose_name_plural = _('rulesets items')
-        verbose_name = _('ruleset item')
+        verbose_name_plural = _('rule kits items')
+        verbose_name = _('rule kit item')
         ordering = ['group']
 
 
 class IpRule(models.Model):
 
-    rule_set = models.ForeignKey(
-        RuleSet,
-        verbose_name=_('ruleset item'),
+    rule_kit = models.ForeignKey(
+        RuleKit,
+        verbose_name=_('rule kit item'),
     )
-    classifier_set = models.ForeignKey(
-        ClassifierSet,
-        verbose_name=_('classifier set item'),
+    classifier_kit = models.ForeignKey(
+        ClassifierKit,
+        verbose_name=_('classifier kit item'),
     )
     action = models.CharField(
         max_length=255,
@@ -194,17 +194,24 @@ class IpRule(models.Model):
         default=0,
     )
 
-    def get_classifiers(self):
-        return self.classifier_set.classifier_set.all()
+    def get_classifiers4(self):
+        return self.classifier_kit.classifier_set.filter(
+            ip_version=IP_VERSION_4
+        )
+
+    def get_classifiers6(self):
+        return self.classifier_kit.classifier_set.filter(
+            ip_version=IP_VERSION_6
+        )
 
     def __unicode__(self):
         return u'{0}:{1}'.format(
-            self.rule_set.group,
-            self.classifier_set.name,
+            self.rule_kit.group,
+            self.classifier_kit.name,
             self.action
         )
 
     class Meta:
         verbose_name_plural = _('iprules items')
         verbose_name = _('iprule item')
-        ordering = ['rule_set', '-weight', 'classifier_set']
+        ordering = ['rule_kit', '-weight', 'classifier_kit']

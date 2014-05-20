@@ -10,6 +10,6 @@ register = Library()
 def firewall_group_filter(group):
     return {
         'group': group,
-        'rulset': group.ruleset,
-        'rule_list': group.ruleset.get_rules(),
+        'rulekit': group.rulekit,
+        'rule_list': group.rulekit.get_rules(),
     }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-19 15:02+0400\n"
+"POT-Creation-Date: 2014-05-20 08:37+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,142 +19,138 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: models.py:9
+#: models.py:15
 msgid "ip version 4"
 msgstr "ip версии 4"
 
-#: models.py:10
+#: models.py:16
 msgid "ip version 6"
 msgstr "ip версии 6"
 
-#: models.py:26
+#: models.py:24
 msgid "any"
 msgstr "любой"
 
-#: models.py:27
+#: models.py:25
 msgid "echo reply"
 msgstr "echo ответ"
 
-#: models.py:28
+#: models.py:26
 msgid "echo request"
 msgstr "echo запрос"
 
-#: models.py:34
+#: models.py:29
 msgid "deny"
 msgstr "запретить"
 
-#: models.py:35
+#: models.py:30
 msgid "allow"
 msgstr "разрешить"
 
-#: models.py:43
-msgid "classifier set name"
+#: models.py:38
+msgid "classifier kit name"
 msgstr "имя набора классификаторов"
 
-#: models.py:48 models.py:69
+#: models.py:43 models.py:64
 msgid "description"
 msgstr "описание"
 
-#: models.py:56
-msgid "classifier sets items"
+#: models.py:51
+msgid "classifier kits items"
 msgstr "наборы классификоторов"
 
-#: models.py:57 models.py:178
-msgid "classifier set item"
+#: models.py:52 models.py:80 models.py:181
+msgid "classifier kit item"
 msgstr "набор классификаторов"
 
-#: models.py:65
+#: models.py:60
 msgid "interface name"
 msgstr "имя интерфейса"
 
-#: models.py:76
+#: models.py:71
 msgid "net interfaces items"
 msgstr "сетевые интерфейсы"
 
-#: models.py:77
+#: models.py:72
 msgid "net interface item"
 msgstr "сетевой интерфейс"
 
-#: models.py:85
-msgid "ip filter"
-msgstr "ip фильтр"
-
-#: models.py:89
+#: models.py:84
 msgid "ip protocol version"
 msgstr "версия протокола ip"
 
-#: models.py:95
+#: models.py:90
 msgid "protocol type"
 msgstr "тип протокола"
 
-#: models.py:101
+#: models.py:97
 msgid "source ip address"
 msgstr "ip адрес источника"
 
-#: models.py:106
+#: models.py:102
 msgid "destination ip address"
 msgstr "ip адрес назначения"
 
-#: models.py:111
+#: models.py:107
 msgid "input interface"
 msgstr "входной интерфейс"
 
-#: models.py:118
+#: models.py:114
 msgid "output interface"
 msgstr "выходной интерфейс"
 
-#: models.py:125
+#: models.py:121
 msgid "source ports"
 msgstr "порт источника"
 
-#: models.py:130
+#: models.py:126
 msgid "destination ports"
 msgstr "порт назначения"
 
-#: models.py:135
+#: models.py:131
 msgid "icmp type"
 msgstr "тип icmp"
 
-#: models.py:144
+#: models.py:143
 msgid "classifieres items"
 msgstr "классификаторы"
 
-#: models.py:145
+#: models.py:144
 msgid "classifier item"
 msgstr "классификатор"
 
-#: models.py:153
+#: models.py:152
 msgid "group"
 msgstr "группа"
 
-#: models.py:158
+#: models.py:157
 msgid "default action"
 msgstr "действие поумолчанию"
 
-#: models.py:165
-msgid "rulesets items"
+#: models.py:168
+msgid "rule kits items"
 msgstr "наборы правил"
 
-#: models.py:166 models.py:174
-msgid "ruleset item"
+#: models.py:169 models.py:177
+msgid "rule kit item"
 msgstr "набор правил"
 
-#: models.py:183
+#: models.py:186
 msgid "action"
 msgstr "действие"
 
-#: models.py:186
+#: models.py:189
 msgid "enabled"
 msgstr "включено"
 
-#: models.py:190
+#: models.py:193
 msgid "weight"
 msgstr "вес"
 
-#: models.py:202
+#: models.py:211
 msgid "iprules items"
 msgstr "правила"
 
-#: models.py:203
+#: models.py:212
 msgid "iprule item"
 msgstr "правило"
