@@ -44,7 +44,9 @@ modprobe nf_nat_irc
 {% endfor %}
 
 # цепочка классификатор
-
+$IPT4 -t filter -N group_classifier_a
+$IPT4 -t filter -N group_classifier_b
+{% firewall_group_classifier 'group_classifier_a' 'group_classifier_b' %}
 #*************************************************
 # настройка правил проходящего трафика
 
