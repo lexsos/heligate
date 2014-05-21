@@ -99,6 +99,7 @@ PROJECT_APPS = (
     'accounts_dynamic_ip',
     'accounts_web',
     'firewall',
+    'squid3',
 )
 
 INSTALLED_APPS = (
