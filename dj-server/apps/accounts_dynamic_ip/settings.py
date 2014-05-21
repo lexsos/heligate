@@ -3,7 +3,7 @@ from django.conf import settings
 
 CONFIG = {
     'PRIORITY': 50,
-    'KEY_LEN': 1024,
+    'KEY_LEN': 128,
     'ALLOW_CHARS': 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)',
 }
 
