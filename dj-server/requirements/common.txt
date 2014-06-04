@@ -1,7 +1,7 @@
 Django==1.5.7
-django-admin-tools
+django-admin-tools==0.5.1
 south==0.8.2
-pil
+pil==1.1.7
 easy-thumbnails==1.2
 django-tinymce==1.5.1
 six==1.6.1
