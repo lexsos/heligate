@@ -9,4 +9,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         Ip4Entry.objects.all().delete()
-        self.stdout.write('All entries successfully deleted')
+        self.stdout.write('All IP entries successfully deleted')

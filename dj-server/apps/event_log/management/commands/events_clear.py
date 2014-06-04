@@ -9,4 +9,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         Event.objects.all().delete()
-        self.stdout.write('All entries successfully deleted')
+        self.stdout.write('All event log entries successfully deleted')
