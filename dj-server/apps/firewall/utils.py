@@ -9,9 +9,9 @@ def get_ipt_params(classifier):
     if classifier.protocol:
         result += u'-p ' + classifier.protocol + u' '
     if classifier.src_ip:
-        result += u'-src ' + classifier.src_ip + u' '
+        result += u'--src ' + classifier.src_ip + u' '
     if classifier.dst_ip:
-        result += u'-dst ' + classifier.dst_ip + u' '
+        result += u'--dst ' + classifier.dst_ip + u' '
     if classifier.input_if:
         result += u'-i ' + classifier.input_if.name + u' '
     if classifier.output_if:
