@@ -100,6 +100,7 @@ PROJECT_APPS = (
     'accounts_web',
     'firewall',
     'squid3',
+    'event_log',
 )
 
 INSTALLED_APPS = (
