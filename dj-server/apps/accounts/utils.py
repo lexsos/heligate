@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from event_log.utils import event_reg_user, event_unreg_user
 from .models import Ip4Entry
 
 
@@ -22,6 +23,8 @@ def user_reg_ip4(user, ip_address, priority=0):
             if entries[0].priority > priority:
                 return 1
             entries.delete()
+            event_unreg_user()
+
 
         # проверяем превышение количества записей у текущего пользователя
         entries = Ip4Entry.objects.filter(user=user)
@@ -37,6 +40,7 @@ def user_reg_ip4(user, ip_address, priority=0):
             else:
                 for entry in entries[:to_del_count]:
                     entry.delete()
+                event_unreg_user()
 
         # привязываем ip адресс к пользователю
         entries = Ip4Entry(
@@ -45,6 +49,7 @@ def user_reg_ip4(user, ip_address, priority=0):
             priority=priority,
         )
         entries.save()
+        event_reg_user()
         return 0
 
 
@@ -53,3 +58,4 @@ def user_unreg_ip(user, ip_address=None):
     if not ip_address is None:
         entries = entries.filter(ip_address=ip_address)
     entries.delete()
+    event_unreg_user()
