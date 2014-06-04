@@ -3,22 +3,17 @@
 #!/bin/bash
 
 #*************************************************
-# Константы
-
-readonly IPT4=iptables
-
-#*************************************************
 # Сбрасываем настройки
 
-$IPT4 -F
-$IPT4 -X
-$IPT4 -t nat -F
-$IPT4 -t nat -X
-$IPT4 -t mangle -F
-$IPT4 -t mangle -X
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
 
 # Устанавливаем политики по умолчанию
-$IPT4 -P FORWARD DROP
+iptables -P FORWARD DROP
 
 # очищаем правила
 ip rule flush
@@ -44,17 +39,17 @@ modprobe nf_nat_irc
 {% endfor %}
 
 # цепочка классификатор
-$IPT4 -t filter -N group_classifier_a
-$IPT4 -t filter -N group_classifier_b
+iptables -t filter -N group_classifier_a
+iptables -t filter -N group_classifier_b
 {% firewall_group_classifier 'group_classifier_a' 'group_classifier_b' %}
 #*************************************************
 # настройка правил проходящего трафика
 
 # Разрешаем прохождение установленых соединений
-$IPT4 -t filter -A  FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -t filter -A  FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 # Распределяем трафик по группам
-$IPT4 -t filter -A  FORWARD -j group_classifier_a
-$IPT4 -t filter -A  FORWARD -j group_classifier_b
+iptables -t filter -A  FORWARD -j group_classifier_a
+iptables -t filter -A  FORWARD -j group_classifier_b
 
 
 # Разрешаем пересылку
