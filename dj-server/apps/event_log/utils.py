@@ -22,12 +22,11 @@ def event_reg_user():
 
 
 def event_unreg_user():
-    add_event(ACCOUNTS_REG_USER)
+    add_event(ACCOUNTS_UNREG_USER)
 
 
 def run_scripts(scripts):
     old_cd = os.getcwd()
-
 
     rc_root = os.path.join(settings.PROJECT_ROOT, '..', 'rc.d')
     rc_root = os.path.normpath(os.path.abspath(rc_root))
@@ -39,10 +38,10 @@ def run_scripts(scripts):
     os.chdir(old_cd)
 
 
-def apply(event_type=None):
+def apply_events(event_type=None):
     qs = Event.objects.filter(applyed=False)
     if not event_type is None:
-        qs = qs.filter(event_id=event_type)
+        qs = qs.filter(event_id__in=event_type)
 
     scripts = set()
     for event in qs:

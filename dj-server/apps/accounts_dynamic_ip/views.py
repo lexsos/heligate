@@ -6,6 +6,11 @@ from django.views.generic import View
 from django.http import HttpResponse
 
 from accounts.utils import user_reg_ip4
+from event_log.utils import apply_events
+from event_log.patterns import (
+    ACCOUNTS_REG_USER,
+    ACCOUNTS_UNREG_USER,
+)
 
 from .models import DynamicAccounts
 from .settings import CONFIG
@@ -71,4 +76,5 @@ class AuthView(View):
             user.username,
             ip_address,
         )
+        apply_events([ACCOUNTS_REG_USER, ACCOUNTS_UNREG_USER])
         return self.response_suc(msg)
