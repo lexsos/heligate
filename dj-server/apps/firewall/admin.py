@@ -81,6 +81,4 @@ class IpRuleAdmin(admin.ModelAdmin):
 
 admin.site.register(ClassifierKit, ClassifierKitAdmin)
 admin.site.register(NetInterface, NetInterfaceAdmin)
-admin.site.register(Classifier, ClassifierAdmin)
 admin.site.register(RuleKit, RuleKitAdmin)
-admin.site.register(IpRule, IpRuleAdmin)
