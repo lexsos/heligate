@@ -39,7 +39,6 @@ class LogoutView(RedirectView):
     def get_redirect_url(self):
         ip_address = get_ip(self.request)
         user = get_user_by_ip4(ip_address)
-        print 'OK'
         if (not user is None) and (not ip_address is None):
             user_unreg_ip(user, ip_address)
             apply_user_reg()
