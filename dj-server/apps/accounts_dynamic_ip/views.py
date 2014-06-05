@@ -5,6 +5,8 @@ from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.http import HttpResponse
 
+from ipware.ip import get_ip
+
 from accounts.utils import user_reg_ip4
 from event_log.utils import apply_events
 from event_log.patterns import (
@@ -21,14 +23,6 @@ class AuthView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
         return super(AuthView, self).dispatch(*args, **kwargs)
-
-    def get_client_ip(self):
-        x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = self.request.META.get('REMOTE_ADDR')
-        return ip
 
     def read_json_data(self):
         try:
@@ -68,7 +62,7 @@ class AuthView(View):
             return self.response_err('user not fount or wrong secret')
 
         user = accounts[0].user
-        ip_address = self.get_client_ip()
+        ip_address = get_ip(self.request)
         if user_reg_ip4(user, ip_address, CONFIG['PRIORITY']) != 0:
             return self.response_err("can't register user")
 
