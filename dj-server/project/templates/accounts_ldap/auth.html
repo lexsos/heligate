@@ -2,8 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap 101 Template</title>
-    <link href="{{STATIC_URL}}css/libs/bootstrap.min.css" rel="stylesheet">
+    <title>Авторизация</title>
     <link href="{{STATIC_URL}}css/style.css" rel="stylesheet">
   </head>
   <body>
@@ -14,21 +13,21 @@
       <a href="{% url 'accounts_ldap_logout' %}">выход</a>
     {% else %}
       <p class="info">Для получения доступа к сети Интернет введите Ваш логин/пароль</p>
-      <form class="form-inline" role="form" action="{% url 'accounts_ldap_auth' %}" method="post" enctype="multipart/form-data">
+      <form action="{% url 'accounts_ldap_auth' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <div class="form-group">
+        <div>
           <label for="{{ form.user_name.id_for_label }}">Логин</label>
           {{ form.user_name }}
         </div>
 
-        <div class="form-group">
+        <div>
             <label for="{{ form.password.id_for_label }}">Пароль</label>
             {{ form.password }}
         </div>
 
         <div class="control">
-            <button type="submit" class="btn btn-default">Авторизация</button>
+            <button type="submit">Авторизация</button>
         </div>
         {{ form.non_field_errors }}
      </form>
