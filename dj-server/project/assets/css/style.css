@@ -12,24 +12,17 @@ body {
 .ldap-auth {
 
     position: fixed;
-    width: 300px;
+    width: 400px;
     height: 200px;
     top: 50%;
     left: 50%;
     margin-top: -100px;
-    margin-left: -150px;
+    margin-left: -200px;
 
 }
 
-.ldap-auth .info {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.ldap-auth label {
-    width: 60px;
-}
-
-.ldap-auth .control {
-    text-align: center;
+.auth-border {
+    border: solid 1px #CCCCCC;
+    border-radius: 10px;
+    padding: 10px;
 }
