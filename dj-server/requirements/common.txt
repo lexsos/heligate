@@ -7,6 +7,7 @@ django-tinymce==1.5.1
 six==1.6.1
 django-ipware==0.0.8
 python-ldap==2.4.15
+beautifulsoup4==4.3.2
 
 -e git://github.com/andreyfedoseev/django-static-precompiler.git#egg=django-static-precompiler
 -e git://github.com/lexsos/django-mixin.git#egg=django-mixin
