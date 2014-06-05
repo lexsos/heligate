@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import User, Group
+from django.core.exceptions import ObjectDoesNotExist
+
 from event_log.utils import event_reg_user, event_unreg_user
-from .models import Ip4Entry
+from .models import Ip4Entry, Profile
 
 
 def user_reg_ip4(user, ip_address, priority=0):
@@ -59,3 +62,27 @@ def user_unreg_ip(user, ip_address=None):
         entries = entries.filter(ip_address=ip_address)
     entries.delete()
     event_unreg_user()
+
+
+def create_account(username, max_ip4_entry, group_name, full_name=''):
+    new_user = User(username=username, is_active=True)
+    new_user.save()
+
+    group = Group.objects.get(name=group_name)
+    new_profile = Profile(
+        user=new_user,
+        full_name=full_name,
+        max_ip4_entry=max_ip4_entry,
+        group=group
+    )
+    new_profile.save()
+
+    return new_user
+
+
+def get_user_by_ip4(ip4):
+    try:
+        return Ip4Entry.objects.get(ip_address=ip4).user
+    except ObjectDoesNotExist:
+        return None
+

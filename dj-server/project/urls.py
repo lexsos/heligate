@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^tinymce/', include('tinymce.urls')),
 
     url(r'^api/accounts_dynamic/', include('accounts_dynamic_ip.urls')),
+    url(r'^auth/', include('accounts_ldap.urls')),
 
     url(r'^tmpl/(.*)$', 'django.shortcuts.render')
 )

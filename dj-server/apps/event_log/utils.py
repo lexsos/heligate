@@ -50,3 +50,7 @@ def apply_events(event_type=None):
 
     qs.update(applyed=True)
     run_scripts(scripts)
+
+
+def apply_user_reg():
+    apply_events([ACCOUNTS_REG_USER, ACCOUNTS_UNREG_USER])

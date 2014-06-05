@@ -8,11 +8,7 @@ from django.http import HttpResponse
 from ipware.ip import get_ip
 
 from accounts.utils import user_reg_ip4
-from event_log.utils import apply_events
-from event_log.patterns import (
-    ACCOUNTS_REG_USER,
-    ACCOUNTS_UNREG_USER,
-)
+from event_log.utils import apply_user_reg
 
 from .models import DynamicAccounts
 from .settings import CONFIG
@@ -70,5 +66,5 @@ class AuthView(View):
             user.username,
             ip_address,
         )
-        apply_events([ACCOUNTS_REG_USER, ACCOUNTS_UNREG_USER])
+        apply_user_reg()
         return self.response_suc(msg)
