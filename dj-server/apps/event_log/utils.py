@@ -46,7 +46,7 @@ def apply_events(event_type=None):
     scripts = set()
     for event in qs:
         script_name = CONFIG['EVENTS'][event.event_id]
-        scripts |= set([script_name,])
+        scripts |= set([script_name, ])
 
     qs.update(applyed=True)
     run_scripts(scripts)
