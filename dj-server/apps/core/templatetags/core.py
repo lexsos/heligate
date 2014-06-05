@@ -2,7 +2,10 @@ from django import template
 from django.utils.safestring import mark_safe
 from bs4 import BeautifulSoup
 
+
 register = template.Library()
+
+
 @register.filter
 def add_class(html, css_class):
     soup = BeautifulSoup(unicode(html), 'html.parser')

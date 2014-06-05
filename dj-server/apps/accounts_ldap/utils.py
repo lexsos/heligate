@@ -2,7 +2,7 @@ import ldap
 
 
 def extruct_group(fqdn):
-   return  fqdn.split(',')[0].replace('CN=', '')
+    return fqdn.split(',')[0].replace('CN=', '')
 
 
 def extruct_group_list(data):
@@ -28,7 +28,7 @@ def get_user_info(ldap_domain, ldap_tree_scoupe, user_name, password):
         ['sAMAccountName', 'memberOf', 'displayName']
     )
 
-    Type,Rez = l.result(r, 1, 10)
+    Type, Rez = l.result(r, 1, 10)
 
     params = {}
     params['full_name'] = Rez[0][1]['displayName'][0]

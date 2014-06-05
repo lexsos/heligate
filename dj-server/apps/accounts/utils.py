@@ -28,7 +28,6 @@ def user_reg_ip4(user, ip_address, priority=0):
             entries.delete()
             event_unreg_user()
 
-
         # проверяем превышение количества записей у текущего пользователя
         entries = Ip4Entry.objects.filter(user=user)
         current_count = entries.count()
@@ -85,4 +84,3 @@ def get_user_by_ip4(ip4):
         return Ip4Entry.objects.get(ip_address=ip4).user
     except ObjectDoesNotExist:
         return None
-

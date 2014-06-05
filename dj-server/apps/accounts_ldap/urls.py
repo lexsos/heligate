@@ -3,7 +3,8 @@ from django.conf.urls import patterns, url
 from .views import LdapAuthView, LogoutView
 
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(
         r'^$',
         LdapAuthView.as_view(),
