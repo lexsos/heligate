@@ -9,5 +9,5 @@ ICMP_ANY = 'any'
 ICMP_ECHO_REP = 'echo-reply'
 ICMP_ECHO_REQ = 'echo-request'
 
-ACTION_DENY = 'DPOR'
+ACTION_DENY = 'DROP'
 ACTION_ALLOW = 'ACCEPT'
