@@ -9,20 +9,42 @@ from .patterns import INTERNAL_IF
 
 def get_ipt_params(classifier):
     result = u''
+
     if classifier.protocol:
         result += u'-p ' + classifier.protocol + u' '
+
     if classifier.src_ip:
+        if classifier.src_ip_not:
+            result += u'! '
         result += u'--src ' + classifier.src_ip + u' '
+
     if classifier.dst_ip:
+        if classifier.dst_ip_not:
+            result += u'! '
         result += u'--dst ' + classifier.dst_ip + u' '
+
     if classifier.input_if:
-        result += u'-i ' + classifier.input_if.name + u' '
+        if classifier.input_if_not:
+            result += u'! '
+        result += u'-i ' + classifier.input_if.if_name + u' '
+
     if classifier.output_if:
-        result += u'-o ' + classifier.output_if.name + u' '
+        if classifier.output_if_not:
+            result += u'! '
+        result += u'-o ' + classifier.output_if.if_name + u' '
+
     if classifier.src_ports:
-        result += u'-m multiport --sports ' + classifier.src_ports + u' '
+        result += u'-m multiport '
+        if classifier.src_ports_not:
+            result += u'! '
+        result += u'--sports ' + classifier.src_ports + u' '
+
     if classifier.dst_ports:
-        result += u'-m multiport --dports ' + classifier.dst_ports + u' '
+        result += u'-m multiport '
+        if classifier.dst_ports_not:
+            result += u'! '
+        result += u'--dports ' + classifier.dst_ports + u' '
+
     if classifier.icmp_type:
         result += u'--icmp-type ' + classifier.icmp_type + u' '
     return result

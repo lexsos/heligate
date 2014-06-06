@@ -72,6 +72,7 @@ class NetInterface(models.Model):
     description = models.CharField(
         max_length=255,
         verbose_name=_('description'),
+        blank=True,
     )
 
     def __unicode__(self):
@@ -107,10 +108,18 @@ class Classifier(models.Model):
         verbose_name=_('source ip address'),
         blank=True,
     )
+    src_ip_not = models.BooleanField(
+        verbose_name=_('negation source ip address'),
+        default=False,
+    )
     dst_ip = models.CharField(
         max_length=255,
         verbose_name=_('destination ip address'),
         blank=True,
+    )
+    dst_ip_not = models.BooleanField(
+        verbose_name=_('negation destination ip address'),
+        default=False,
     )
     input_if = models.ForeignKey(
         NetInterface,
@@ -119,6 +128,10 @@ class Classifier(models.Model):
         blank=True,
         related_name='+',
     )
+    input_if_not = models.BooleanField(
+        verbose_name=_('negation input interface'),
+        default=False,
+    )
     output_if = models.ForeignKey(
         NetInterface,
         verbose_name=_('output interface'),
@@ -126,15 +139,27 @@ class Classifier(models.Model):
         blank=True,
         related_name='+',
     )
+    output_if_not = models.BooleanField(
+        verbose_name=_('negation output interface'),
+        default=False,
+    )
     src_ports = models.CharField(
         max_length=255,
         verbose_name=_('source ports'),
         blank=True,
     )
+    src_ports_not = models.BooleanField(
+        verbose_name=_('negation source ports'),
+        default=False,
+    )
     dst_ports = models.CharField(
         max_length=255,
         verbose_name=_('destination ports'),
         blank=True,
+    )
+    dst_ports_not = models.BooleanField(
+        verbose_name=_('negation destination ports'),
+        default=False,
     )
     icmp_type = models.CharField(
         max_length=255,

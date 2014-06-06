@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-06 11:37+0400\n"
+"POT-Creation-Date: 2014-06-06 15:05+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgstr "описание"
 msgid "classifier kits items"
 msgstr "наборы классификоторов"
 
-#: models.py:57 models.py:90 models.py:191
+#: models.py:57 models.py:90 models.py:215
 msgid "classifier kit item"
 msgstr "набор классификаторов"
 
@@ -99,70 +99,94 @@ msgstr "тип протокола"
 msgid "source ip address"
 msgstr "ip адрес источника"
 
-#: models.py:112
-msgid "destination ip address"
-msgstr "ip адрес назначения"
+#: models.py:111
+msgid "negation source ip address"
+msgstr "отцицание ip адреса источника"
 
-#: models.py:117
+#: models.py:116
+msgid "destination ip address"
+msgstr "ip адреса назначения"
+
+#: models.py:120
+msgid "negation destination ip address"
+msgstr "отцицание ip адреса назначения"
+
+#: models.py:125
 msgid "input interface"
 msgstr "входной интерфейс"
 
-#: models.py:124
+#: models.py:131
+msgid "negation input interface"
+msgstr "отцицание входного интерфейс"
+
+#: models.py:136
 msgid "output interface"
 msgstr "выходной интерфейс"
 
-#: models.py:131
+#: models.py:142
+msgid "negation output interface"
+msgstr "отцицание выходного интерфейса"
+
+#: models.py:147
 msgid "source ports"
 msgstr "порт источника"
 
-#: models.py:136
+#: models.py:151
+msgid "negation source ports"
+msgstr "отцицание порта источника"
+
+#: models.py:156
 msgid "destination ports"
 msgstr "порт назначения"
 
-#: models.py:141
+#: models.py:160
+msgid "negation destination ports"
+msgstr "отцицание порта назначения"
+
+#: models.py:165
 msgid "icmp type"
 msgstr "тип icmp"
 
-#: models.py:153
+#: models.py:177
 msgid "classifieres items"
 msgstr "классификаторы"
 
-#: models.py:154
+#: models.py:178
 msgid "classifier item"
 msgstr "классификатор"
 
-#: models.py:162
+#: models.py:186
 msgid "group"
 msgstr "группа"
 
-#: models.py:167
+#: models.py:191
 msgid "default action"
 msgstr "действие поумолчанию"
 
-#: models.py:178
+#: models.py:202
 msgid "rule kits items"
 msgstr "наборы правил"
 
-#: models.py:179 models.py:187
+#: models.py:203 models.py:211
 msgid "rule kit item"
 msgstr "набор правил"
 
-#: models.py:196
+#: models.py:220
 msgid "action"
 msgstr "действие"
 
-#: models.py:199
+#: models.py:223
 msgid "enabled"
 msgstr "включено"
 
-#: models.py:203
+#: models.py:227
 msgid "weight"
 msgstr "вес"
 
-#: models.py:225
+#: models.py:249
 msgid "iprules items"
 msgstr "правила"
 
-#: models.py:226
+#: models.py:250
 msgid "iprule item"
 msgstr "правило"
