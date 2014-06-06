@@ -51,6 +51,20 @@ iptables -t filter -A  FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACC
 iptables -t filter -A  FORWARD -j group_classifier_a
 iptables -t filter -A  FORWARD -j group_classifier_b
 
+#настраиваем прозрачный перехват TCP соединений
+iptables -t mangle -N DIVERT
+iptables -t mangle -A DIVERT -j MARK --set-mark {{ divert_mark }}
+iptables -t mangle -A DIVERT -j ACCEPT
+iptables  -t mangle -A PREROUTING -p tcp -m socket -j DIVERT
+
+# очищаем правила
+ip -f inet rule flush
+ip -f inet rule add from all lookup main pref 32766
+ip -f inet rule add from all lookup default pref 32767
+
+#маршрутизация перехваченного трафика
+ip -f inet rule add fwmark {{ divert_mark }} lookup {{ divert_route_table }}
+ip -f inet route add local default dev {{ internal_if }} table {{ divert_route_table }}
 
 # Разрешаем пересылку
 echo 1 > /proc/sys/net/ipv4/ip_forward

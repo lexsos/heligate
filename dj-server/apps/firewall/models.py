@@ -7,6 +7,7 @@ from .patterns import (
     PROTOCOL_TYPE_TCP, PROTOCOL_TYPE_UDP, PROTOCOL_TYPE_ICMP,
     ICMP_ANY, ICMP_ECHO_REP, ICMP_ECHO_REQ,
     ACTION_DENY, ACTION_ALLOW,
+    INTERNAL_IF, EXTERNAL_IF,
 )
 from .utils import get_ipt_params
 
@@ -30,6 +31,10 @@ ACTION = (
     (ACTION_ALLOW, _('allow')),
 )
 
+INTERFACE_TYPE = (
+    (INTERNAL_IF, _('internal')),
+    (EXTERNAL_IF, _('external')),
+)
 
 class ClassifierKit(models.Model):
 
@@ -59,13 +64,18 @@ class NetInterface(models.Model):
         max_length=255,
         verbose_name=_('interface name'),
     )
+    if_type = models.CharField(
+        max_length=255,
+        verbose_name=_('interface type'),
+        choices = INTERFACE_TYPE,
+    )
     description = models.CharField(
         max_length=255,
         verbose_name=_('description'),
     )
 
     def __unicode__(self):
-        return u'{0}:{1}'.format(self.name, self.description)
+        return u'{0}:{1}'.format(self.if_name, self.description)
 
     class Meta:
         verbose_name_plural = _('net interfaces items')

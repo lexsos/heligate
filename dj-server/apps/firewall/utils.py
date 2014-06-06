@@ -3,6 +3,9 @@ import re
 from django.template.loader import render_to_string
 from django.contrib.auth.models import Group
 
+from .settings import CONFIG
+from .patterns import INTERNAL_IF
+
 
 def get_ipt_params(classifier):
     result = u''
@@ -34,13 +37,19 @@ def normalize_script(script):
 
 
 def get_all_conf():
-        context = {
-            'group_list': Group.objects.all(),
-        }
-        conf = render_to_string('firewall/config.sh', context)
-        return normalize_script(conf)
+    from .models import NetInterface
+    internal_if = NetInterface.objects.filter(if_type=INTERNAL_IF)[0]
+    internal_if = internal_if.if_name
+    context = {
+        'group_list': Group.objects.all(),
+        'divert_mark': CONFIG['DIVERT_MARK'],
+        'divert_route_table': CONFIG['DIVERT_ROUTE_TABLE'],
+        'internal_if': internal_if,
+    }
+    conf = render_to_string('firewall/config.sh', context)
+    return normalize_script(conf)
 
 
 def get_update_classifier():
-        conf = render_to_string('firewall/update_classifier.sh')
-        return normalize_script(conf)
+    conf = render_to_string('firewall/update_classifier.sh')
+    return normalize_script(conf)

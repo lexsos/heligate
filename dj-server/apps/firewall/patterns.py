@@ -11,3 +11,6 @@ ICMP_ECHO_REQ = 'echo-request'
 
 ACTION_DENY = 'DROP'
 ACTION_ALLOW = 'ACCEPT'
+
+INTERNAL_IF = 'internal'
+EXTERNAL_IF = 'external'
