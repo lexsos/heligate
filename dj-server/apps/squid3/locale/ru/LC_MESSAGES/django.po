@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 08:31+0400\n"
+"POT-Creation-Date: 2014-06-09 10:33+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,34 +19,42 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: models.py:20
+#: models.py:20 models.py:63
 msgid "classifier kit item"
 msgstr "набор классификаторов"
 
-#: models.py:23
-msgid "squid port"
-msgstr "порт squid"
-
-#: models.py:28
+#: models.py:23 models.py:71
 msgid "enabled"
 msgstr "включено"
 
-#: models.py:36
-msgid "intercept filters items"
-msgstr "фильтры перехвата"
-
 #: models.py:37
-msgid "intercept filter item"
-msgstr "фильтр перехвата"
+msgid "excluded filters items"
+msgstr "фильтры исключений"
 
-#: models.py:45
+#: models.py:38
+msgid "excluded filter item"
+msgstr "фильтр исключения"
+
+#: models.py:46
 msgid "user"
 msgstr "пользователь"
 
-#: models.py:53
-msgid "exclude users items"
+#: models.py:54
+msgid "excluded users items"
 msgstr "пользователи без проксирования"
 
-#: models.py:54
-msgid "exclude user item"
+#: models.py:55
+msgid "excluded user item"
 msgstr "пользователь без проксирования"
+
+#: models.py:66
+msgid "squid port"
+msgstr "порт squid"
+
+#: models.py:85
+msgid "intercept filters items"
+msgstr "фильтры перехвата"
+
+#: models.py:86
+msgid "intercept filter item"
+msgstr "фильтр перехвата"

@@ -49,6 +49,12 @@ class ClassifierKit(models.Model):
         blank=True,
     )
 
+    def get_classifiers_ip4(self):
+        return self.classifier_set.filter(ip_version=IP_VERSION_4)
+
+    def get_classifiers_ip6(self):
+        return self.classifier_set.filter(ip_version=IP_VERSION_6)
+
     def __unicode__(self):
         return self.name
 
@@ -230,14 +236,10 @@ class IpRule(models.Model):
     )
 
     def get_classifiers4(self):
-        return self.classifier_kit.classifier_set.filter(
-            ip_version=IP_VERSION_4
-        )
+        return self.classifier_kit.get_classifiers_ip4()
 
     def get_classifiers6(self):
-        return self.classifier_kit.classifier_set.filter(
-            ip_version=IP_VERSION_6
-        )
+        return self.classifier_kit.get_classifiers_ip6()
 
     def __unicode__(self):
         return u'{0}:{1}'.format(

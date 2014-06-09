@@ -84,3 +84,10 @@ def get_user_by_ip4(ip4):
         return Ip4Entry.objects.get(ip_address=ip4).user
     except ObjectDoesNotExist:
         return None
+
+
+def get_ip4_list(user):
+    ip4_list = []
+    for ip4_entry in Ip4Entry.objects.filter(user=user):
+        ip4_list.append(ip4_entry.ip_address)
+    return ip4_list

@@ -1,8 +1,7 @@
-import re
-
 from django.template.loader import render_to_string
 from django.contrib.auth.models import Group
 
+from core.utils import normalize_script
 from .settings import CONFIG
 from .patterns import INTERNAL_IF
 
@@ -48,14 +47,6 @@ def get_ipt_params(classifier):
     if classifier.icmp_type:
         result += u'--icmp-type ' + classifier.icmp_type + u' '
     return result
-
-
-def normalize_script(script):
-    norma = script
-    norma = re.sub(u' +', u' ', norma)
-    norma = re.sub(u'\n\s*', u'\n', norma)
-    norma = re.sub(u'^\s*\n', u'', norma)
-    return norma
 
 
 def get_all_conf():
