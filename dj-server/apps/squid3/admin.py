@@ -4,6 +4,8 @@ from .models import (
     ExcludedFilter,
     ExcludedUser,
     InterceptFilter,
+    Domain,
+    SquidLog,
 )
 
 
@@ -30,6 +32,18 @@ class InterceptFilterAdmin(admin.ModelAdmin):
     )
 
 
+class SquidLogAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'access_date',
+        'user',
+        'domain',
+        'size',
+    )
+
+
 admin.site.register(ExcludedFilter, ExcludedFilterAdmin)
 admin.site.register(ExcludedUser)
 admin.site.register(InterceptFilter, InterceptFilterAdmin)
+admin.site.register(Domain)
+admin.site.register(SquidLog, SquidLogAdmin)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-09 10:33+0400\n"
+"POT-Creation-Date: 2014-06-09 14:16+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgstr "фильтры исключений"
 msgid "excluded filter item"
 msgstr "фильтр исключения"
 
-#: models.py:46
+#: models.py:46 models.py:115
 msgid "user"
 msgstr "пользователь"
 
@@ -58,3 +58,35 @@ msgstr "фильтры перехвата"
 #: models.py:86
 msgid "intercept filter item"
 msgstr "фильтр перехвата"
+
+#: models.py:93
+msgid "dns name"
+msgstr "DNS имя"
+
+#: models.py:102
+msgid "domains items"
+msgstr "домены"
+
+#: models.py:103 models.py:119
+msgid "domain item"
+msgstr "домен"
+
+#: models.py:110
+msgid "access date"
+msgstr "дата доступа"
+
+#: models.py:122
+msgid "page url"
+msgstr "адрес страцицы"
+
+#: models.py:125
+msgid "object size"
+msgstr "размер объекта"
+
+#: models.py:132
+msgid "squid log items"
+msgstr "записи журнала squid"
+
+#: models.py:133
+msgid "squid log item"
+msgstr "запись журнала squid"
