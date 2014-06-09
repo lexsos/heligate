@@ -7,4 +7,4 @@ class Command(BaseCommand):
     help = 'Generate config for squid3 interception'
 
     def handle(self, *args, **options):
-         self.stdout.write(gen_intercept_conf())
+        self.stdout.write(gen_intercept_conf())

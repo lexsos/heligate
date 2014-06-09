@@ -36,6 +36,7 @@ INTERFACE_TYPE = (
     (EXTERNAL_IF, _('external')),
 )
 
+
 class ClassifierKit(models.Model):
 
     name = models.CharField(
@@ -73,7 +74,7 @@ class NetInterface(models.Model):
     if_type = models.CharField(
         max_length=255,
         verbose_name=_('interface type'),
-        choices = INTERFACE_TYPE,
+        choices=INTERFACE_TYPE,
     )
     description = models.CharField(
         max_length=255,

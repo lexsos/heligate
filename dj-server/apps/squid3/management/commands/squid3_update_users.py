@@ -7,4 +7,4 @@ class Command(BaseCommand):
     help = 'Generate config for squid3 excluded users'
 
     def handle(self, *args, **options):
-         self.stdout.write(gen_excluded_users())
+        self.stdout.write(gen_excluded_users())
