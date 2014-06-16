@@ -25,6 +25,7 @@ class SquidLoger(object):
         self.domains_l2 = {}
         self.domains_counter = 0
         self.users = {}
+        self.records = []
 
     def get_user(self, ip_address):
         user = self.users.get(ip_address, 0)
@@ -59,7 +60,6 @@ class SquidLoger(object):
         self.domains_counter += 1
         return domain
 
-
     def pars_squid_data(self, data):
         squid_data = data.split()
         if len(squid_data) >= 10:
@@ -81,7 +81,9 @@ class SquidLoger(object):
                 url=url,
                 size=size,
             )
-            rec.save()
+            self.records.append(rec)
 
     def flush(self):
-        pass
+        for rec in  self.records:
+            rec.save()
+        self.records = []
