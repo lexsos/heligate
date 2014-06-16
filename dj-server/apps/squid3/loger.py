@@ -7,7 +7,7 @@ from .settings import CONFIG
 
 DOMAIN_CACHE_SIZE = CONFIG['DOMAIN_CACHE_SIZE']
 COUNTER_MUL = CONFIG['COUNTER_MUL']
-re_url = re.compile(r'^https?://(?P<domain>[^ \f\n\r\t\v/]+)')
+re_url = re.compile(r'^https?://(?P<domain>[^ \f\n\r\t\v/:]+)')
 
 
 def extruct_domain(url):
