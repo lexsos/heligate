@@ -8,6 +8,7 @@ from .settings import CONFIG
 DOMAIN_CACHE_SIZE = CONFIG['DOMAIN_CACHE_SIZE']
 COUNTER_MUL = CONFIG['COUNTER_MUL']
 re_url = re.compile(r'^https?://(?P<domain>[^ \f\n\r\t\v/:]+)')
+re_l2_domain = re.compile(r'^([^ \f\n\r\t\v/:]+\.)*(?P<l2_domain>[^ \.\f\n\r\t\v/:]+\.[^ \.\f\n\r\t\v/:]+)$')
 
 
 def extruct_domain(url):
@@ -15,6 +16,13 @@ def extruct_domain(url):
     if m is None:
         return None
     return m.group('domain')
+
+
+def extruct_l2_domain(domain_name):
+    m = re_l2_domain.search(domain_name)
+    if m is None:
+        return None
+    return m.group('l2_domain')
 
 
 class SquidLoger(object):

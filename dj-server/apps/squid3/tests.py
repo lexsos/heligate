@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from .loger import extruct_domain
+from .loger import extruct_domain, extruct_l2_domain
 
 
 class ExtructDomainTestCase(TestCase):
@@ -122,3 +122,39 @@ class ExtructDomainTestCase(TestCase):
 
         domain_name = extruct_domain('https://1.2.3.4:8080/fdf/dfdf/dfd/121f')
         self.assertEqual(domain_name, '1.2.3.4')
+
+
+class ExtructL2DomainTestCase(TestCase):
+
+    def test_simple(self):
+
+        domain_name = extruct_l2_domain('test')
+        self.assertEqual(domain_name, None)
+
+        domain_name = extruct_l2_domain('test.test')
+        self.assertEqual(domain_name, 'test.test')
+
+        domain_name = extruct_l2_domain('test.test.test')
+        self.assertEqual(domain_name, 'test.test')
+
+    def test_digit(self):
+
+        domain_name = extruct_l2_domain('test1')
+        self.assertEqual(domain_name, None)
+
+        domain_name = extruct_l2_domain('test1.1test2.1test3')
+        self.assertEqual(domain_name, '1test2.1test3')
+
+        domain_name = extruct_l2_domain('1.2.3.4')
+        self.assertEqual(domain_name, '3.4')
+
+    def test_sym(self):
+
+        domain_name = extruct_l2_domain('_test1_')
+        self.assertEqual(domain_name, None)
+
+        domain_name = extruct_l2_domain('1-tes_t1._1test1.1test1__')
+        self.assertEqual(domain_name, '_1test1.1test1__')
+
+        domain_name = extruct_l2_domain('_1._2_._3_._4_')
+        self.assertEqual(domain_name, '_3_._4_')
