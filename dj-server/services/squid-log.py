@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+import signal
 
 
 proj_dir = os.path.join(os.path.dirname(__file__), '..')
@@ -20,8 +21,17 @@ if apps_root not in sys.path:
 from squid3.loger import Loger
 
 
+sig_handled = False
+
+
+def handler(signum, frame):
+    global sig_handled
+    sig_handled = True
+
+
 if __name__ == '__main__':
 
+    signal.signal(signal.SIGUSR1, handler)
     loger = Loger()
 
     while True:
@@ -31,3 +41,8 @@ if __name__ == '__main__':
             loger.log(line)
         elif cmd_type == 'F':
             loger.flush()
+
+        global sig_handled
+        if sig_handled:
+            sig_handled = False
+            loger.users_updated()
