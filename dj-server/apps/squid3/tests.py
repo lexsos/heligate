@@ -1,10 +1,14 @@
 from django.test import TestCase
 
-from .loger import extruct_domain, extruct_l2_domain
+from .loger import (
+    extruct_domain,
+    extruct_l2_domain,
+    DomainCache,
+    UserCache,
+)
 
 
 class ExtructDomainTestCase(TestCase):
-
 
     def test_simple(self):
 
@@ -49,7 +53,6 @@ class ExtructDomainTestCase(TestCase):
 
         domain_name = extruct_domain('https://1.2.3.4')
         self.assertEqual(domain_name, '1.2.3.4')
-
 
     def test_sym(self):
 
@@ -117,10 +120,10 @@ class ExtructDomainTestCase(TestCase):
         domain_name = extruct_domain('https://test.ru:8080/fdf/dfdf/dfd/121f')
         self.assertEqual(domain_name, 'test.ru')
 
-        domain_name = extruct_domain('https://_test.ru_:8080/fdf/dfdf/dfd/121f')
+        domain_name = extruct_domain('https://_test.ru_:8080/fdf/dfdf/dfd/')
         self.assertEqual(domain_name, '_test.ru_')
 
-        domain_name = extruct_domain('https://1.2.3.4:8080/fdf/dfdf/dfd/121f')
+        domain_name = extruct_domain('https://1.2.3.4:8080/fdf/dfdf/dfd/')
         self.assertEqual(domain_name, '1.2.3.4')
 
 
@@ -158,3 +161,52 @@ class ExtructL2DomainTestCase(TestCase):
 
         domain_name = extruct_l2_domain('_1._2_._3_._4_')
         self.assertEqual(domain_name, '_3_._4_')
+
+
+class DomainCacheTestCase(TestCase):
+
+    def test_simple(self):
+        cache = DomainCache()
+
+        domain = cache.get_domain('abc.def.ghi')
+        self.assertEqual(domain.name, 'abc.def.ghi')
+        self.assertEqual(domain.l2_domain.l2_name, 'def.ghi')
+
+    def test_loops(self):
+        cache = DomainCache()
+
+        domain = cache.get_domain('abc.def.ghi')
+        self.assertEqual(cache.miss_count, 1)
+        pk = domain.pk
+        for i in xrange(1000):
+            domain = cache.get_domain('abc.def.ghi')
+            self.assertEqual(domain.pk, pk)
+            self.assertEqual(cache.miss_count, 1)
+
+        domain = cache.get_domain('aaa.bbb.ccc')
+        self.assertEqual(cache.miss_count, 2)
+        pk = domain.pk
+        for i in xrange(1000):
+            domain = cache.get_domain('aaa.bbb.ccc')
+            self.assertEqual(domain.pk, pk)
+            self.assertEqual(cache.miss_count, 2)
+
+
+class UserCacheTestCase(TestCase):
+
+    def test_simple(self):
+        cache = UserCache()
+
+        user = cache.get_user_by_ip('0.0.0.0')
+        self.assertEqual(user, None)
+
+    def test_loops(self):
+        cache = UserCache()
+
+        for i in xrange(1000):
+            cache.get_user_by_ip('0.0.0.0')
+            self.assertEqual(cache.miss_count, 1)
+
+        for i in xrange(1000):
+            cache.get_user_by_ip('0.0.0.1')
+            self.assertEqual(cache.miss_count, 2)

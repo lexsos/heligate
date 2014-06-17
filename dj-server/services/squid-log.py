@@ -17,12 +17,12 @@ if apps_root not in sys.path:
     sys.path.insert(0, apps_root)
 
 
-from squid3.loger import SquidLoger
+from squid3.loger import Loger
 
 
 if __name__ == '__main__':
 
-    loger = SquidLoger()
+    loger = Loger()
 
     while True:
         line = sys.stdin.readline()
