@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-09 14:16+0400\n"
+"POT-Creation-Date: 2014-06-16 15:37+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgstr "фильтры исключений"
 msgid "excluded filter item"
 msgstr "фильтр исключения"
 
-#: models.py:46 models.py:115
+#: models.py:46 models.py:138
 msgid "user"
 msgstr "пользователь"
 
@@ -60,33 +60,45 @@ msgid "intercept filter item"
 msgstr "фильтр перехвата"
 
 #: models.py:93
+msgid "l2 dns name"
+msgstr "DNS имя 2го уровня"
+
+#: models.py:102
+msgid "l2 domains items"
+msgstr "домены 2го уровня"
+
+#: models.py:103 models.py:116
+msgid "l2 domain item"
+msgstr "домен 2го уровня"
+
+#: models.py:110
 msgid "dns name"
 msgstr "DNS имя"
 
-#: models.py:102
+#: models.py:125
 msgid "domains items"
 msgstr "домены"
 
-#: models.py:103 models.py:119
+#: models.py:126 models.py:144
 msgid "domain item"
 msgstr "домен"
 
-#: models.py:110
+#: models.py:133
 msgid "access date"
 msgstr "дата доступа"
 
-#: models.py:122
+#: models.py:147
 msgid "page url"
 msgstr "адрес страцицы"
 
-#: models.py:125
+#: models.py:150
 msgid "object size"
 msgstr "размер объекта"
 
-#: models.py:132
+#: models.py:157
 msgid "squid log items"
 msgstr "записи журнала squid"
 
-#: models.py:133
+#: models.py:158
 msgid "squid log item"
 msgstr "запись журнала squid"

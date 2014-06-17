@@ -1,7 +1,7 @@
 import re
 
 from accounts.utils import get_user_by_ip4
-from .models import Domain, SquidLog
+from .models import L2Domain, Domain, SquidLog
 from .settings import CONFIG
 
 
@@ -56,7 +56,13 @@ class SquidLoger(object):
                 self.domains_l1[domain_name] = domain
 
         if domain is None:
-            domain, created = Domain.objects.get_or_create(dns=domain_name)
+            domain, created = Domain.objects.get_or_create(dns_name=domain_name)
+            if created:
+                l2_domain_name = extruct_l2_domain(domain_name).lower()
+                if not l2_domain_name is None:
+                    l2_domain, l2_created = L2Domain.objects.get_or_create(l2_dns_name=l2_domain_name)
+                    domain.l2_dns = l2_domain
+                    domain.save()
             self.domains_l1[domain_name] = domain
 
         if self.domains_counter > DOMAIN_CACHE_SIZE*COUNTER_MUL:

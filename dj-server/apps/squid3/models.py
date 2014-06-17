@@ -87,21 +87,44 @@ class InterceptFilter(models.Model):
         ordering = ['squid_port']
 
 
-class Domain(models.Model):
+class L2Domain(models.Model):
 
-    dns = models.CharField(
-        verbose_name=_('dns name'),
+    l2_dns_name = models.CharField(
+        verbose_name=_('l2 dns name'),
         max_length=1024,
         unique=True,
     )
 
     def __unicode__(self):
-        return self.dns
+        return self.l2_dns_name
+
+    class Meta:
+        verbose_name_plural = _('l2 domains items')
+        verbose_name = _('l2 domain item')
+        ordering = ['l2_dns_name']
+
+
+class Domain(models.Model):
+
+    dns_name = models.CharField(
+        verbose_name=_('dns name'),
+        max_length=1024,
+        unique=True,
+    )
+    l2_dns = models.ForeignKey(
+        L2Domain,
+        verbose_name=_('l2 domain item'),
+        null=True,
+        blank=True,
+    )
+
+    def __unicode__(self):
+        return self.dns_name
 
     class Meta:
         verbose_name_plural = _('domains items')
         verbose_name = _('domain item')
-        ordering = ['dns']
+        ordering = ['dns_name']
 
 
 class SquidLog(models.Model):
@@ -128,7 +151,7 @@ class SquidLog(models.Model):
     )
 
     def __unicode__(self):
-        return u'{0}:{1}'.format(self.access_date, self.domain.dns)
+        return u'{0}:{1}'.format(self.access_date, self.domain.dns_name)
 
     class Meta:
         verbose_name_plural = _('squid log items')

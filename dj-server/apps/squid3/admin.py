@@ -4,6 +4,7 @@ from .models import (
     ExcludedFilter,
     ExcludedUser,
     InterceptFilter,
+    L2Domain,
     Domain,
     SquidLog,
 )
@@ -45,5 +46,6 @@ class SquidLogAdmin(admin.ModelAdmin):
 admin.site.register(ExcludedFilter, ExcludedFilterAdmin)
 admin.site.register(ExcludedUser)
 admin.site.register(InterceptFilter, InterceptFilterAdmin)
+admin.site.register(L2Domain)
 admin.site.register(Domain)
 admin.site.register(SquidLog, SquidLogAdmin)
