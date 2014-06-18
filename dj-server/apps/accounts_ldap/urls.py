@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from django.views.generic import TemplateView
 
 from .views import LdapAuthView, LogoutView
 
@@ -14,5 +15,10 @@ urlpatterns = patterns(
         r'^logout/$',
         LogoutView.as_view(),
         name='accounts_ldap_logout',
+    ),
+    url(
+        r'^error/$',
+        TemplateView.as_view(template_name='accounts_ldap/error.html'),
+        name='accounts_ldap_error',
     ),
 )

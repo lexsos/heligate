@@ -13,13 +13,12 @@ class LdapAuthView(FormView):
 
     template_name = 'accounts_ldap/auth.html'
     form_class = LdapAuthForm
-    success_url = 'accounts_ldap/info'
 
     def form_valid(self, form):
         user = form.cleaned_data['user']
         ip_address = get_ip(self.request)
         if user_reg_ip4(user, ip_address, CONFIG['PRIORITY']) != 0:
-            self.success_url = 'accounts_ldap/err'
+            self.success_url = reverse('accounts_ldap_error')
         else:
             apply_user_reg()
             self.success_url = reverse('accounts_ldap_auth')
