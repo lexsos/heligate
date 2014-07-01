@@ -12,6 +12,11 @@ urlpatterns = patterns(
         name='accounts_ldap_auth',
     ),
     url(
+        r'^(?P<pk>\d+)/$',
+        LdapAuthView.as_view(),
+        name='accounts_ldap_auth_redirect',
+    ),
+    url(
         r'^logout/$',
         LogoutView.as_view(),
         name='accounts_ldap_logout',

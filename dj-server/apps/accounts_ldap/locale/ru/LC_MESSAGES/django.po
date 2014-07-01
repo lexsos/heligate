@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 10:38+0400\n"
+"POT-Creation-Date: 2014-07-01 14:19+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,3 +26,19 @@ msgstr "доступ запрещен"
 #: forms.py:42
 msgid "user\\password invalid"
 msgstr "неверный логин или пароль"
+
+#: models.py:8
+msgid "page url"
+msgstr "url страницы"
+
+#: models.py:11
+msgid "create date"
+msgstr "дата создания"
+
+#: models.py:19
+msgid "redirect url items"
+msgstr "url для преренаправлений"
+
+#: models.py:20
+msgid "redirect url item"
+msgstr "url для преренаправлений"

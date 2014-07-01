@@ -1,13 +1,5 @@
-from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
-
+from accounts_ldap.utils import get_auth_url
 from .loger import UserCache
-
-
-def get_auth_url():
-    site = Site.objects.get_current()
-    url = reverse('accounts_ldap_auth')
-    return 'http://{0}{1}'.format(site, url)
 
 
 class SquidRedirector(object):
@@ -26,7 +18,7 @@ class SquidRedirector(object):
         url, user_ip = self.extruct_data(squid_str)
         user = self.user_cache.get_user_by_ip(user_ip)
         if user is None:
-            auth_url = get_auth_url()
+            auth_url = get_auth_url(url)
             return '302:{0}\n'.format(auth_url)
         return '\n'
 

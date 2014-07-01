@@ -8,6 +8,7 @@ CONFIG = {
     'DEFAULT_GROUP': '',
     'DEFAULT_IP4': 1,
     'PRIORITY': 50,
+    'WEB_SCHEME': 'http',
 }
 
 CONFIG.update(getattr(settings, 'ACCOUNTS_LDAP', {}))

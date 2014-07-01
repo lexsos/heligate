@@ -1,4 +1,8 @@
 import ldap
+from django.core.urlresolvers import reverse
+from django.contrib.sites.models import Site
+
+from .settings import CONFIG
 
 
 def extruct_group(fqdn):
@@ -35,3 +39,16 @@ def get_user_info(ldap_domain, ldap_tree_scoupe, user_name, password):
     params['user_name'] = Rez[0][1]['sAMAccountName'][0].lower()
     params['groups'] = extruct_group_list(Rez[0][1]['memberOf'])
     return params
+
+
+web_scheme = CONFIG['WEB_SCHEME']
+
+
+def get_auth_url(user_url):
+    from .models import RedirectUrl
+    redirect_url = RedirectUrl(url=user_url)
+    redirect_url.save()
+    pk = redirect_url.pk
+    uri = reverse('accounts_ldap_auth_redirect', kwargs={'pk': pk})
+    site = Site.objects.get_current()
+    return '{0}://{1}{2}'.format(web_scheme, site, uri)
