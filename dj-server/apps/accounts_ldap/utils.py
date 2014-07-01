@@ -46,6 +46,7 @@ web_scheme = CONFIG['WEB_SCHEME']
 
 def get_auth_url(user_url):
     from .models import RedirectUrl
+
     redirect_url = RedirectUrl(url=user_url)
     redirect_url.save()
     pk = redirect_url.pk
