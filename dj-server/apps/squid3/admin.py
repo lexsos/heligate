@@ -59,6 +59,7 @@ class DomainClassifierAdmin(admin.ModelAdmin):
         'reg_expr',
     )
 
+
 class DomainClassifierInline(admin.StackedInline):
     model = DomainClassifier
     extra = 5
@@ -69,6 +70,7 @@ class DomainClassifierKitAdmin(admin.ModelAdmin):
         'name',
     )
     inlines = [DomainClassifierInline, ]
+
 
 class DomainFilterAdmin(admin.ModelAdmin):
 
@@ -105,6 +107,4 @@ admin.site.register(L2Domain)
 admin.site.register(Domain)
 admin.site.register(SquidLog, SquidLogAdmin)
 admin.site.register(DomainClassifierKit, DomainClassifierKitAdmin)
-#admin.site.register(DomainClassifier, DomainClassifierAdmin)
 admin.site.register(DomainFilterKit, DomainFilterKitAdmin)
-#admin.site.register(DomainFilter, DomainFilterAdmin)
