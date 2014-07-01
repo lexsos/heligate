@@ -7,6 +7,8 @@ from .models import (
     L2Domain,
     Domain,
     SquidLog,
+    DomainClassifierKit,
+    DomainClassifier,
 )
 
 
@@ -43,9 +45,24 @@ class SquidLogAdmin(admin.ModelAdmin):
     )
 
 
+class DomainClassifierAdmin(admin.ModelAdmin):
+
+    list_filter = (
+        'classifier_kit',
+    )
+    list_display = (
+        'classifier_kit',
+        'l2_domain',
+        'domain',
+        'reg_expr',
+    )
+
+
 admin.site.register(ExcludedFilter, ExcludedFilterAdmin)
 admin.site.register(ExcludedUser)
 admin.site.register(InterceptFilter, InterceptFilterAdmin)
 admin.site.register(L2Domain)
 admin.site.register(Domain)
 admin.site.register(SquidLog, SquidLogAdmin)
+admin.site.register(DomainClassifierKit)
+admin.site.register(DomainClassifier, DomainClassifierAdmin)

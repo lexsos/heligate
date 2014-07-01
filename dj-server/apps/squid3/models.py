@@ -157,3 +157,59 @@ class SquidLog(models.Model):
         verbose_name_plural = _('squid log items')
         verbose_name = _('squid log item')
         ordering = ['access_date']
+
+
+class DomainClassifierKit(models.Model):
+
+    name = models.CharField(
+        verbose_name=_('name'),
+        max_length=255,
+        unique=True,
+    )
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = _('domain classifier kit items')
+        verbose_name = _('domain classifier kit item')
+        ordering = ['name']
+
+
+class DomainClassifier(models.Model):
+
+    classifier_kit = models.ForeignKey(
+        DomainClassifierKit,
+        verbose_name=_('domain classifier kit item'),
+    )
+    l2_domain = models.ForeignKey(
+        L2Domain,
+        verbose_name=_('l2 domain item'),
+        blank=True,
+        null=True,
+    )
+    domain = models.ForeignKey(
+        Domain,
+        verbose_name=_('domain item'),
+        blank=True,
+        null=True,
+    )
+    reg_expr = models.CharField(
+        verbose_name=_('regular expression'),
+        max_length=255,
+        blank=True,
+    )
+
+    def __unicode__(self):
+        if self.l2_domain:
+            return unicode(self.l2_domain)
+        elif self.domain:
+            return unicode(self.domain)
+        elif self.reg_expr:
+            return unicode(self.reg_expr)
+        return _('empty')
+
+    class Meta:
+        verbose_name_plural = _('domain classifier items')
+        verbose_name = _('domain classifier item')
+        ordering = ['classifier_kit']
