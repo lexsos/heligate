@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 07:38+0400\n"
+"POT-Creation-Date: 2014-07-01 08:25+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,13 +105,13 @@ msgstr "запись журнала squid"
 
 #: models.py:165
 msgid "name"
-msgstr ""
+msgstr "имя"
 
 #: models.py:174
 msgid "domain classifier kit items"
 msgstr "наборы доменных классификаторов"
 
-#: models.py:175 models.py:183
+#: models.py:175 models.py:183 models.py:242
 msgid "domain classifier kit item"
 msgstr "набор доменных классификаторов"
 
@@ -130,3 +130,35 @@ msgstr "классификаторы доменов"
 #: models.py:214
 msgid "domain classifier item"
 msgstr "классификатор домена"
+
+#: models.py:222
+msgid "group"
+msgstr "группа"
+
+#: models.py:225
+msgid "default allow"
+msgstr "разрешить поумолчанию"
+
+#: models.py:233
+msgid "domain filter kit items"
+msgstr "наборы доменных фильтров"
+
+#: models.py:234 models.py:246
+msgid "domain filter kit item"
+msgstr "набор доменных фильтров"
+
+#: models.py:249
+msgid "allow"
+msgstr ""
+
+#: models.py:253
+msgid "weight"
+msgstr ""
+
+#: models.py:265
+msgid "domain filter items"
+msgstr "фильтры доменов"
+
+#: models.py:266
+msgid "domain filter item"
+msgstr "фильтр доменов"

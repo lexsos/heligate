@@ -9,6 +9,8 @@ from .models import (
     SquidLog,
     DomainClassifierKit,
     DomainClassifier,
+    DomainFilterKit,
+    DomainFilter,
 )
 
 
@@ -57,6 +59,44 @@ class DomainClassifierAdmin(admin.ModelAdmin):
         'reg_expr',
     )
 
+class DomainClassifierInline(admin.StackedInline):
+    model = DomainClassifier
+    extra = 5
+
+
+class DomainClassifierKitAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+    )
+    inlines = [DomainClassifierInline, ]
+
+class DomainFilterAdmin(admin.ModelAdmin):
+
+    list_filter = (
+        'classifier_kit',
+        'domain_filter_kit',
+    )
+    list_display = (
+        'domain_filter_kit',
+        'classifier_kit',
+        'allow',
+        'weight',
+    )
+
+
+class DomainFilterInline(admin.StackedInline):
+    model = DomainFilter
+    extra = 5
+
+
+class DomainFilterKitAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'group',
+        'default_allow',
+    )
+    inlines = [DomainFilterInline, ]
+
 
 admin.site.register(ExcludedFilter, ExcludedFilterAdmin)
 admin.site.register(ExcludedUser)
@@ -64,5 +104,7 @@ admin.site.register(InterceptFilter, InterceptFilterAdmin)
 admin.site.register(L2Domain)
 admin.site.register(Domain)
 admin.site.register(SquidLog, SquidLogAdmin)
-admin.site.register(DomainClassifierKit)
-admin.site.register(DomainClassifier, DomainClassifierAdmin)
+admin.site.register(DomainClassifierKit, DomainClassifierKitAdmin)
+#admin.site.register(DomainClassifier, DomainClassifierAdmin)
+admin.site.register(DomainFilterKit, DomainFilterKitAdmin)
+#admin.site.register(DomainFilter, DomainFilterAdmin)

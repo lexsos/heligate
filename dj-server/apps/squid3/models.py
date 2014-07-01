@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 from firewall.models import ClassifierKit
 
@@ -213,3 +213,55 @@ class DomainClassifier(models.Model):
         verbose_name_plural = _('domain classifier items')
         verbose_name = _('domain classifier item')
         ordering = ['classifier_kit']
+
+
+class DomainFilterKit(models.Model):
+
+    group = models.OneToOneField(
+        Group,
+        verbose_name=_('group'),
+    )
+    default_allow = models.BooleanField(
+        verbose_name=_('default allow'),
+        default=True,
+    )
+
+    def __unicode__(self):
+        return u'{0}:{1}'.format(self.group, self.default_allow)
+
+    class Meta:
+        verbose_name_plural = _('domain filter kit items')
+        verbose_name = _('domain filter kit item')
+        ordering = ['group']
+
+
+class DomainFilter(models.Model):
+
+    classifier_kit = models.ForeignKey(
+        DomainClassifierKit,
+        verbose_name=_('domain classifier kit item'),
+    )
+    domain_filter_kit = models.ForeignKey(
+        DomainFilterKit,
+        verbose_name=_('domain filter kit item'),
+    )
+    allow = models.BooleanField(
+        verbose_name=_('allow'),
+        default=True,
+    )
+    weight = models.PositiveIntegerField(
+        verbose_name=_('weight'),
+        default=0,
+    )
+
+    def __unicode__(self):
+        return u'{0}:{1}:{2}'.format(
+            self.domain_filter_kit,
+            self.classifier_kit,
+            self.allow,
+        )
+
+    class Meta:
+        verbose_name_plural = _('domain filter items')
+        verbose_name = _('domain filter item')
+        ordering = ['domain_filter_kit', '-weight']
