@@ -27,7 +27,7 @@ class Redirector(object):
 
     def __init__(self):
         super(Redirector, self).__init__()
-        self.user_cache = UserCache()
+        self.user_cache = UserCache(cache_miss=False)
         self.redirector = SquidRedirector(self.user_cache)
 
     def redirect(self, squid_str):
