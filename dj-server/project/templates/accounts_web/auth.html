@@ -2,7 +2,10 @@
 {% load core %}
 
 
-{% block auth_content %}
+{% block title_content %}Авторизация{% endblock %}
+
+
+{% block main_content %}
       {% if proxy_user %}
         <p class="text-center">
           Пользователь {{ proxy_user.username }} загеристрирован

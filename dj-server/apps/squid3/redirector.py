@@ -21,7 +21,7 @@ class RedirectRuls(object):
     def rebuild_rules(self):
         self.groups_rules = build_rules()
 
-    def is_allowed(user, domain_name):
+    def is_allowed(self, user, domain_name):
 
         l2_domain_name = extruct_l2_domain(domain_name)
         group_id = user.profile.group.pk
@@ -57,7 +57,7 @@ class SquidRedirector(object):
             auth_url = get_auth_url(url)
             return '302:{0}\n'.format(auth_url)
         domain_name = extruct_domain(url)
-        if not redirect_ruls.is_allowed(user, domain_name):
+        if not self.redirect_ruls.is_allowed(user, domain_name):
             deny_url = get_deny_url()
             return '302:{0}\n'.format(deny_url)
         return '\n'

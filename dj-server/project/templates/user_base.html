@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Авторизация</title>
+    <title>{% block title_content %}{% endblock %}</title>
     <link href="{{STATIC_URL}}css/style.css" rel="stylesheet">
     <link href="{{STATIC_URL}}css/libs/bootstrap.css" rel="stylesheet">
   </head>
@@ -10,7 +10,7 @@
 
   <div class="ldap-auth">
     <div class="auth-border">
-        {% block auth_content %}{% endblock %}
+        {% block main_content %}{% endblock %}
     </div>
   </div>
 
