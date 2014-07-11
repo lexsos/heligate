@@ -97,7 +97,7 @@ PROJECT_APPS = (
     'accounts',
     'accounts_static_ip',
     'accounts_dynamic_ip',
-    'accounts_ldap',
+    'accounts_web',
     'firewall',
     'squid3',
     'event_log',
@@ -166,9 +166,10 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_buttons3_add': "|,spellchecker",
 }
 
-ACCOUNTS_LDAP = {
+ACCOUNTS_WEB = {
+    'DEFAULT_GROUP': 'InetUsers',
+
     'LDAP_DOMAIN': 'avia.local',
     'LDAP_TREE': 'dc=avia,dc=local',
-    'LDAP_INET_GROPUT': 'inet',
-    'DEFAULT_GROUP': 'InetUsers'
+    'LDAP_INET_GROUPT': 'inet',
 }

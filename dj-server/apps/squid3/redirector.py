@@ -1,4 +1,4 @@
-from accounts_ldap.utils import get_auth_url
+from accounts_web.utils import get_auth_url
 from .cache import UserCache
 
 

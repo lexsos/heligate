@@ -8,7 +8,7 @@ from django.db import models
 def fixture():
 
     from django.contrib.auth.models import Group
-    from accounts_ldap.settings import CONFIG
+    from accounts_web.settings import CONFIG
     group_default = Group(name=CONFIG['DEFAULT_GROUP'])
     group_default.save()
 

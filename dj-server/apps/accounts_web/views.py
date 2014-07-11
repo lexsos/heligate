@@ -10,25 +10,46 @@ from .settings import CONFIG
 from .models import RedirectUrl
 
 
+class LogoutView(RedirectView):
+
+    permanent = False
+
+    def get_redirect_url(self):
+
+        ip_address = get_ip(self.request)
+        user = get_user_by_ip4(ip_address)
+        if (not user is None) and (not ip_address is None):
+            user_unreg_ip(user, ip_address)
+            apply_user_reg()
+
+        return reverse('accounts_web_auth')
+
+
 class LdapAuthView(FormView):
 
-    template_name = 'accounts_ldap/auth.html'
+    template_name = 'accounts_web/auth.html'
     form_class = LdapAuthForm
 
-    def get_url_for_redirect(self):
+    def get_user_url(self):
         pk = self.kwargs.get('pk')
         try:
             redirect_url = RedirectUrl.objects.get(pk=pk)
             return redirect_url.url
         except RedirectUrl.DoesNotExist:
-            pass
-        return reverse('accounts_ldap_auth')
+            return None
+
+    def get_url_for_redirect(self):
+        user_url = self.get_user_url()
+        if not user_url is None:
+            return user_url
+        return reverse('accounts_web_auth')
 
     def form_valid(self, form):
         user = form.cleaned_data['user']
         ip_address = get_ip(self.request)
+
         if user_reg_ip4(user, ip_address, CONFIG['PRIORITY']) != 0:
-            self.success_url = reverse('accounts_ldap_error')
+            self.success_url = reverse('accounts_web_error')
         else:
             apply_user_reg()
             self.success_url = self.get_url_for_redirect()
@@ -38,17 +59,5 @@ class LdapAuthView(FormView):
         context = super(LdapAuthView, self).get_context_data(**kwargs)
         ip_address = get_ip(self.request)
         context['proxy_user'] = get_user_by_ip4(ip_address)
+        context['user_url'] = self.get_user_url()
         return context
-
-
-class LogoutView(RedirectView):
-
-    permanent = False
-
-    def get_redirect_url(self):
-        ip_address = get_ip(self.request)
-        user = get_user_by_ip4(ip_address)
-        if (not user is None) and (not ip_address is None):
-            user_unreg_ip(user, ip_address)
-            apply_user_reg()
-        return reverse('accounts_ldap_auth')

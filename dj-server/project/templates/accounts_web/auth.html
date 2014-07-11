@@ -1,4 +1,4 @@
-{% extends "accounts_ldap/base.html" %}
+{% extends "accounts_web/base.html" %}
 {% load core %}
 
 
@@ -7,7 +7,17 @@
         <p class="text-center">
           Пользователь {{ proxy_user.username }} загеристрирован
           <br>
-          <a href="{% url 'accounts_ldap_logout' %}">выход</a>
+          <a href="{% url 'accounts_web_logout' %}">выход</a>
+          {% if user_url %}
+            <br>
+            <a href="{{ user_url | safe }}">Перейти на запрошенный ресурс</a>
+             <script>
+                function redirect_to_user_url(url) {
+                  window.location.href = url;
+                }
+                setTimeout(redirect_to_user_url, 10000, "{{ user_url | safe }}");
+             </script>
+          {% endif %}
         </p>
       {% else %}
 

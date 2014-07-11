@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from accounts_ldap.models import RedirectUrl
+from accounts_web.models import RedirectUrl
 
 
 class Command(BaseCommand):

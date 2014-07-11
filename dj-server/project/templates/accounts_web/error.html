@@ -1,11 +1,11 @@
-{% extends "accounts_ldap/base.html" %}
+{% extends "accounts_web/base.html" %}
 
 
 {% block auth_content %}
   <p class="text-center">
     При авторизации произошла ошибка.
     <br>
-    Попробуйте <a href="{% url 'accounts_ldap_auth' %}">снова</a> или
+    Попробуйте <a href="{% url 'accounts_web_auth' %}">снова</a> или
     <br>
     обратитесь к системному администратору.
   </p>
