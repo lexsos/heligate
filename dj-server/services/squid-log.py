@@ -35,14 +35,20 @@ if __name__ == '__main__':
     loger = Loger()
 
     while True:
-        line = sys.stdin.readline()
-        cmd_type = line[0]
-        if cmd_type == 'L':
-            loger.log(line)
-        elif cmd_type == 'F':
-            loger.flush()
 
         global sig_handled
         if sig_handled:
             sig_handled = False
             loger.users_updated()
+
+        line = None
+        try:
+            line = sys.stdin.readline()
+        except IOError:
+            continue
+
+        cmd_type = line[0]
+        if cmd_type == 'L':
+            loger.log(line)
+        elif cmd_type == 'F':
+            loger.flush()

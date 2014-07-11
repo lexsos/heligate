@@ -32,3 +32,6 @@ class Redirector(object):
 
     def redirect(self, squid_str):
         return self.redirector.redirect(squid_str)
+
+    def users_updated():
+        self.user_cache.clear()

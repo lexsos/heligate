@@ -35,7 +35,18 @@ if __name__ == '__main__':
     redirector = Redirector()
 
     while True:
-        line = sys.stdin.readline()
+
+        global sig_handled
+        if sig_handled:
+            sig_handled = False
+            redirector.users_updated()
+
+        line = None
+        try:
+            line = sys.stdin.readline()
+        except IOError
+            continue
+
         url = redirector.redirect(line)
         sys.stdout.write(url)
         sys.stdout.flush()
