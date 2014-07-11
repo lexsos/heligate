@@ -4,7 +4,7 @@ from django.conf import settings
 CONFIG = {
     'LDAP_DOMAIN': '',
     'LDAP_TREE': '',
-    'INET_GROPUT': '',
+    'LDAP_INET_GROPUT': '',
     'DEFAULT_GROUP': '',
     'DEFAULT_IP4': 1,
     'PRIORITY': 50,

@@ -18,7 +18,7 @@ class LdapAuthForm(forms.Form):
             user = User.objects.get(username=user_info['user_name'])
             return user
         except ObjectDoesNotExist:
-            if not CONFIG['INET_GROPUT'] in user_info['groups']:
+            if not CONFIG['LDAP_INET_GROPUT'] in user_info['groups']:
                 raise forms.ValidationError(_('access denied'))
             return create_account(
                 user_info['user_name'],

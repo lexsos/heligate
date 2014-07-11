@@ -170,6 +170,6 @@ TINYMCE_DEFAULT_CONFIG = {
 ACCOUNTS_LDAP = {
     'LDAP_DOMAIN': 'avia.local',
     'LDAP_TREE': 'dc=avia,dc=local',
-    'INET_GROPUT': 'inet',
+    'LDAP_INET_GROPUT': 'inet',
     'DEFAULT_GROUP': 'InetUsers'
 }
