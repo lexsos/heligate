@@ -98,7 +98,6 @@ PROJECT_APPS = (
     'accounts_static_ip',
     'accounts_dynamic_ip',
     'accounts_ldap',
-    'accounts_web',
     'firewall',
     'squid3',
     'event_log',
