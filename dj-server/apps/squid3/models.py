@@ -1,3 +1,4 @@
+import re
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import User, Group
@@ -200,6 +201,15 @@ class DomainClassifier(models.Model):
         blank=True,
     )
 
+    def is_matched(self, domain_name, l2_domain_name):
+        if self.l2_domain:
+            return l2_domain_name == self.l2_domain.l2_name
+        elif self.domain:
+            return domain_name == self.domain.name
+        elif self.reg_expr:
+            return not (re.match(self.reg_expr, domain_name) is None)
+        return False
+
     def __unicode__(self):
         if self.l2_domain:
             return unicode(self.l2_domain)
@@ -215,6 +225,18 @@ class DomainClassifier(models.Model):
         ordering = ['classifier_kit']
 
 
+class FakeClassifier(object):
+
+    def __init__(self):
+        super(FakeClassifier, self).__init__()
+
+    def is_matched(self, domain_name, l2_domain_name):
+        return True
+
+    def __unicode__(self):
+        return u'FakeClassifier'
+
+
 class DomainFilterKit(models.Model):
 
     group = models.OneToOneField(
@@ -225,6 +247,13 @@ class DomainFilterKit(models.Model):
         verbose_name=_('default allow'),
         default=True,
     )
+
+    def get_filters(self):
+        all_filters = []
+        for filters in self.domainfilter_set.all():
+            all_filters.extend( filters.get_filters() )
+        all_filters.append( (FakeClassifier(), self.default_allow) )
+        return all_filters
 
     def __unicode__(self):
         return u'{0}:{1}'.format(self.group, self.default_allow)
@@ -253,6 +282,10 @@ class DomainFilter(models.Model):
         verbose_name=_('weight'),
         default=0,
     )
+
+    def get_filters(self):
+        classifies = self.classifier_kit.domainclassifier_set.all()
+        return [ (c, self.allow) for c in classifies]
 
     def __unicode__(self):
         return u'{0}:{1}:{2}'.format(

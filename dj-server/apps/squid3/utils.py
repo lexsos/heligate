@@ -1,5 +1,7 @@
 import re
 from django.template.loader import render_to_string
+from django.core.urlresolvers import reverse
+from django.contrib.sites.models import Site
 
 from core.utils import normalize_script
 from firewall.settings import CONFIG
@@ -52,3 +54,9 @@ def extruct_l2_domain(domain_name):
     if m is None:
         return None
     return m.group('l2_domain')
+
+
+def get_deny_url():
+    uri = reverse('squi3_deny')
+    site = Site.objects.get_current()
+    return 'http://{0}{1}'.format(site, uri)

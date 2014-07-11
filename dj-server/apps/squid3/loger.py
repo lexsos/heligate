@@ -56,3 +56,7 @@ class Loger(object):
 
     def users_updated(self):
         self.user_cache.clear()
+
+    def config_updated(self):
+        self.user_cache.clear()
+        self.domain_cache.clear()

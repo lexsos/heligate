@@ -13,6 +13,7 @@ urlpatterns = patterns('',
 
     url(r'^api/accounts_dynamic/', include('accounts_dynamic_ip.urls')),
     url(r'^auth/', include('accounts_web.urls')),
+    url(r'^proxy/', include('squid3.urls')),
 
     url(r'^tmpl/(.*)$', 'django.shortcuts.render')
 )
