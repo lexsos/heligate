@@ -1,11 +1,7 @@
 from django.test import TestCase
 
-from .loger import (
-    extruct_domain,
-    extruct_l2_domain,
-    DomainCache,
-    UserCache,
-)
+from .utils import extruct_domain, extruct_l2_domain
+from .cache import UserCache, DomainCache
 
 
 class ExtructDomainTestCase(TestCase):
@@ -200,7 +196,7 @@ class UserCacheTestCase(TestCase):
         user = cache.get_user_by_ip('0.0.0.0')
         self.assertEqual(user, None)
 
-    def test_loops(self):
+    def test_loops_cache_miss(self):
         cache = UserCache()
 
         for i in xrange(1000):
@@ -210,3 +206,17 @@ class UserCacheTestCase(TestCase):
         for i in xrange(1000):
             cache.get_user_by_ip('0.0.0.1')
             self.assertEqual(cache.miss_count, 2)
+
+    def test_loops_no_cache_miss(self):
+        cache = UserCache(cache_miss=False)
+        miss = 0
+
+        for i in xrange(1000):
+            cache.get_user_by_ip('0.0.0.0')
+            miss += 1
+            self.assertEqual(cache.miss_count, miss)
+
+        for i in xrange(1000):
+            cache.get_user_by_ip('0.0.0.1')
+            miss += 1
+            self.assertEqual(cache.miss_count, miss)

@@ -1,5 +1,5 @@
 from accounts_ldap.utils import get_auth_url
-from .loger import UserCache
+from .cache import UserCache
 
 
 class SquidRedirector(object):

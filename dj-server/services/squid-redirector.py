@@ -44,7 +44,7 @@ if __name__ == '__main__':
         line = None
         try:
             line = sys.stdin.readline()
-        except IOError
+        except IOError:
             continue
 
         url = redirector.redirect(line)

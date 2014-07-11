@@ -1,3 +1,4 @@
+import re
 from django.template.loader import render_to_string
 
 from core.utils import normalize_script
@@ -31,3 +32,23 @@ def gen_excluded_users():
     }
     conf = render_to_string('squid3/excluded_users.sh', context)
     return normalize_script(conf)
+
+
+re_url = re.compile(r'^https?://(?P<domain>[^ \f\n\r\t\v/:]+)')
+
+
+def extruct_domain(url):
+    m = re_url.search(url)
+    if m is None:
+        return None
+    return m.group('domain').lower()
+
+
+re_l2_domain = re.compile(r'^([^ \f\n\r\t\v/:]+\.)*(?P<l2_domain>[^ \.\f\n\r\t\v/:]+\.[^ \.\f\n\r\t\v/:]+)$')
+
+
+def extruct_l2_domain(domain_name):
+    m = re_l2_domain.search(domain_name)
+    if m is None:
+        return None
+    return m.group('l2_domain')
