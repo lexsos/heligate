@@ -47,6 +47,22 @@ if __name__ == '__main__':
         except IOError:
             continue
 
+        if len(line) <= 1:
+            exit(0)
+
         url = redirector.redirect(line)
         sys.stdout.write(url)
         sys.stdout.flush()
+
+
+#import pdb, sys, traceback
+#def except_hook(exctype, value, traceback1):
+#    f = open('/tmp/squid.log', 'w')
+#    f.write(str(exctype))
+#    f.write('\n')
+#    traceback.print_tb(traceback1, file=f)
+#    f.close()
+#    sys.__excepthook__(exctype, value, traceback)
+#
+#
+#sys.excepthook = except_hook

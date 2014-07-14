@@ -230,7 +230,7 @@ class FakeClassifier(object):
     def __init__(self):
         super(FakeClassifier, self).__init__()
 
-    def is_matched(self, domain_name, l2_domain_name):
+    def is_matched(self, domain):
         return True
 
     def __unicode__(self):
