@@ -8,16 +8,40 @@ from .utils import (
 
 
 class DomainAccessRules(object):
+    # Add control cache size
 
     def __init__(self, default_allow=True):
         super(DomainAccessRules, self).__init__()
         self.groups_rules = build_rules()
         self.default = default_allow
+        self.access_cache = {}
+        self.miss_count = 0
 
     def rebuild_rules(self):
         self.groups_rules = build_rules()
+        self.access_cache = {}
+        self.miss_count = 0
+
+    def get_from_cache(self, user, domain):
+        if user.pk in self.access_cache:
+            user_rules = self.access_cache[user.pk]
+            if domain.pk in user_rules:
+                return user_rules[domain.pk]
+        self.miss_count += 1
+        return None
+
+    def add_to_cache(self, user, domain, access_allow):
+        if not user.pk in self.access_cache:
+            self.access_cache[user.pk] = {}
+
+        user_rules = self.access_cache[user.pk]
+        user_rules[domain.pk] = access_allow
 
     def is_allowed(self, user, domain):
+
+        allowed = self.get_from_cache(user, domain)
+        if not allowed is None:
+            return allowed
 
         group_id = user.profile.group.pk
 
@@ -27,6 +51,7 @@ class DomainAccessRules(object):
         for rule in self.groups_rules[group_id]:
             classifier, allow = rule
             if classifier.is_matched(domain):
+                self.add_to_cache(user, domain, allow)
                 return allow
 
         return self.default
