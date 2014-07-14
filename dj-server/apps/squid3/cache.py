@@ -5,6 +5,7 @@ from .utils import extruct_l2_domain
 
 
 DOMAIN_CACHE_SIZE = CONFIG['DOMAIN_CACHE_SIZE']
+FILTER_CACHE_SIZE = CONFIG['FILTER_CACHE_SIZE']
 COUNTER_MUL = CONFIG['COUNTER_MUL']
 
 
@@ -86,3 +87,49 @@ class DomainCache(object):
             domain = self.get_from_db(dns_name)
         self.check_cache_size()
         return domain
+
+
+class DomainFilterCache(object):
+
+    def __init__(self):
+        super(DomainFilterCache, self).__init__()
+        self.cache_l1 = {}
+        self.cache_l2 = {}
+        self.miss_count = 0
+        self.size = 0
+
+    def clear(self):
+        self.miss_count = 0
+        self.size = 0
+        self.cache_l2 = {}
+        self.cache_l1 = {}
+
+    def chaeck_size(self):
+        if self.size > FILTER_CACHE_SIZE:
+            cache = self.cache_l1
+            self.clear()
+            self.cache_l2 = cache
+
+    def get(self, user, domain):
+        if user.pk in self.cache_l1:
+            user_rules = self.cache_l1[user.pk]
+            if domain.pk in user_rules:
+                return user_rules[domain.pk]
+
+        if user.pk in self.cache_l2:
+            user_rules = self.cache_l2[user.pk]
+            if domain.pk in user_rules:
+                allowed = user_rules[domain.pk]
+                self.add(user, domain, allowed)
+                return allowed
+
+        self.miss_count += 1
+        return None
+
+    def add(self, user, domain, access_allow):
+        if not user.pk in self.cache_l1:
+            self.cache_l1[user.pk] = {}
+
+        user_rules = self.cache_l1[user.pk]
+        user_rules[domain.pk] = access_allow
+        self.size += 1
