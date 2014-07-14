@@ -40,10 +40,10 @@ class DomainAccessRules(object):
 
 class SquidRedirector(object):
 
-    def __init__(self, user_cache, redirect_ruls, domain_cache):
+    def __init__(self, user_cache, redirect_rules, domain_cache):
         super(SquidRedirector, self).__init__()
         self.user_cache = user_cache
-        self.redirect_ruls = redirect_ruls
+        self.redirect_rules = redirect_rules
         self.domain_cache = domain_cache
 
     def extruct_data(self, squid_str):
@@ -67,7 +67,7 @@ class SquidRedirector(object):
             auth_url = get_auth_url(url)
             return self.get_redirection(auth_url)
 
-        if not self.redirect_ruls.is_allowed(user, domain):
+        if not self.redirect_rules.is_allowed(user, domain):
             deny_url = get_deny_url()
             return self.get_redirection(deny_url)
 
@@ -81,11 +81,11 @@ class Redirector(object):
         self.user_cache = UserCache(cache_miss=False)
         self.domain_cache = DomainCache()
         self.domain_filter_cache = DomainFilterCache()
-        self.redirect_ruls = DomainAccessRules(self.domain_filter_cache)
+        self.redirect_rules = DomainAccessRules(self.domain_filter_cache)
 
         self.redirector = SquidRedirector(
             self.user_cache,
-            self.redirect_ruls,
+            self.redirect_rules,
             self.domain_cache,
         )
 
@@ -99,4 +99,4 @@ class Redirector(object):
         self.user_cache.clear()
         self.domain_cache.clear()
         self.domain_filter_cache.clear()
-        self.redirect_ruls.rebuild_rules()
+        self.redirect_rules.rebuild_rules()
