@@ -201,13 +201,13 @@ class DomainClassifier(models.Model):
         blank=True,
     )
 
-    def is_matched(self, domain_name, l2_domain_name):
+    def is_matched(self, domain):
         if self.l2_domain:
-            return l2_domain_name == self.l2_domain.l2_name
+            return domain.l2_domain == self.l2_domain
         elif self.domain:
-            return domain_name == self.domain.name
+            return domain == self.domain
         elif self.reg_expr:
-            return not (re.match(self.reg_expr, domain_name) is None)
+            return not (re.match(self.reg_expr, domain.name) is None)
         return False
 
     def __unicode__(self):
@@ -251,8 +251,8 @@ class DomainFilterKit(models.Model):
     def get_filters(self):
         all_filters = []
         for filters in self.domainfilter_set.all():
-            all_filters.extend( filters.get_filters() )
-        all_filters.append( (FakeClassifier(), self.default_allow) )
+            all_filters.extend(filters.get_filters())
+        all_filters.append((FakeClassifier(), self.default_allow))
         return all_filters
 
     def __unicode__(self):
@@ -285,7 +285,7 @@ class DomainFilter(models.Model):
 
     def get_filters(self):
         classifies = self.classifier_kit.domainclassifier_set.all()
-        return [ (c, self.allow) for c in classifies]
+        return [(c, self.allow) for c in classifies]
 
     def __unicode__(self):
         return u'{0}:{1}:{2}'.format(

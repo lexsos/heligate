@@ -10,6 +10,7 @@ from .models import (
     ExcludedFilter,
     ExcludedUser,
     InterceptFilter,
+    DomainFilterKit,
 )
 
 
@@ -60,3 +61,11 @@ def get_deny_url():
     uri = reverse('squi3_deny')
     site = Site.objects.get_current()
     return 'http://{0}{1}'.format(site, uri)
+
+
+def build_rules():
+    groups = {}
+    for filter_kit in DomainFilterKit.objects.all():
+        rules = filter_kit.get_filters()
+        groups[filter_kit.group.pk] = rules
+    return groups

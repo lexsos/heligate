@@ -15,7 +15,7 @@ class SquidLoger(object):
         squid_data = data.split()
         if len(squid_data) >= 10:
             return squid_data[2], int(squid_data[4]), squid_data[6]
-        return None, None
+        return None, None, None
 
     def log(self, squid_string):
 
