@@ -104,7 +104,8 @@ class DomainFilterCache(object):
         self.cache_l2 = {}
         self.cache_l1 = {}
 
-    def chaeck_size(self):
+    def check_cache_size(self):
+        self.size += 1
         if self.size > FILTER_CACHE_SIZE:
             cache = self.cache_l1
             self.clear()
@@ -132,4 +133,4 @@ class DomainFilterCache(object):
 
         user_rules = self.cache_l1[user.pk]
         user_rules[domain.pk] = access_allow
-        self.size += 1
+        self.check_cache_size()
