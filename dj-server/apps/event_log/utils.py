@@ -1,28 +1,9 @@
 import os
+import pika
 from subprocess import call
-
-
 from django.conf import settings
 
-from .models import Event
 from .settings import CONFIG
-from .patterns import (
-    ACCOUNTS_REG_USER,
-    ACCOUNTS_UNREG_USER,
-)
-
-
-def add_event(event_id):
-    event = Event(event_id=event_id)
-    event.save()
-
-
-def event_reg_user():
-    add_event(ACCOUNTS_REG_USER)
-
-
-def event_unreg_user():
-    add_event(ACCOUNTS_UNREG_USER)
 
 
 def run_scripts(scripts):
@@ -38,19 +19,42 @@ def run_scripts(scripts):
     os.chdir(old_cd)
 
 
-def apply_events(event_type=None):
-    qs = Event.objects.filter(applyed=False)
-    if not event_type is None:
-        qs = qs.filter(event_id__in=event_type)
-
-    scripts = set()
-    for event in qs:
-        script_name = CONFIG['EVENTS'][event.event_id]
-        scripts |= set([script_name, ])
-
-    qs.update(applyed=True)
-    run_scripts(scripts)
+def rabbit_connection():
+    connection_parametrs = pika.ConnectionParameters(
+        host=CONFIG['RABBIT_HOST'],
+    )
+    return pika.BlockingConnection(connection_parametrs)
 
 
-def apply_user_reg():
-    apply_events([ACCOUNTS_REG_USER, ACCOUNTS_UNREG_USER])
+def rabbit_channel(connection):
+    channel = connection.channel()
+    channel.exchange_declare(
+        exchange=CONFIG['RABBIT_EXCHANGE'],
+        type='fanout',
+    )
+    return channel
+
+
+def rabbit_send(message):
+    connection = rabbit_connection()
+    channel = rabbit_channel(connection)
+    channel.basic_publish(
+        exchange=CONFIG['RABBIT_EXCHANGE'],
+        routing_key='',
+        body=message,
+    )
+    connection.close()
+
+
+def rabbit_receive(channel, call_back):
+    result = channel.queue_declare(exclusive=True)
+    queue_name = result.method.queue
+    channel.queue_bind(
+        exchange=CONFIG['RABBIT_EXCHANGE'],
+        queue=queue_name,
+    )
+    channel.basic_consume(
+        call_back,
+        queue=queue_name,
+        no_ack=True,
+    )
