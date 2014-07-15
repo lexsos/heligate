@@ -5,7 +5,7 @@ from ipware.ip import get_ip
 
 from accounts.utils import user_reg_ip4, get_user_by_ip4, user_unreg_ip
 from message_bus.event import confirm_user_reg
-from .forms import LdapAuthForm
+from .forms import WebAuthForm
 from .settings import CONFIG
 from .models import RedirectUrl
 
@@ -25,10 +25,10 @@ class LogoutView(RedirectView):
         return reverse('accounts_web_auth')
 
 
-class LdapAuthView(FormView):
+class WebAuthView(FormView):
 
     template_name = 'accounts_web/auth.html'
-    form_class = LdapAuthForm
+    form_class = WebAuthForm
 
     def get_user_url(self):
         pk = self.kwargs.get('pk')
@@ -53,10 +53,10 @@ class LdapAuthView(FormView):
         else:
             confirm_user_reg()
             self.success_url = self.get_url_for_redirect()
-        return super(LdapAuthView, self).form_valid(form)
+        return super(WebAuthView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        context = super(LdapAuthView, self).get_context_data(**kwargs)
+        context = super(WebAuthView, self).get_context_data(**kwargs)
         ip_address = get_ip(self.request)
         context['proxy_user'] = get_user_by_ip4(ip_address)
         context['user_url'] = self.get_user_url()

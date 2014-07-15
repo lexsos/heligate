@@ -4,14 +4,14 @@ from django.utils.translation import ugettext_lazy as _
 from .auth import AuthHelper
 
 
-class LdapAuthForm(forms.Form):
+class WebAuthForm(forms.Form):
 
     user_name = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
     auth_helper = AuthHelper()
 
     def clean(self):
-        cleaned_data = super(LdapAuthForm, self).clean()
+        cleaned_data = super(WebAuthForm, self).clean()
         user_name = cleaned_data.get('user_name')
         password = cleaned_data.get('password')
 
