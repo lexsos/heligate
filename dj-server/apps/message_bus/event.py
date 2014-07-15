@@ -9,7 +9,19 @@ from .patterns import (
     ACCOUNTS_UNREG_USER,
 )
 
+###############################################
+# Event system:
+# * First, events are added and stored in DB
+# * Then, events are confirmed and message
+#   about that are sending by bus to
+#   another processes
+# * And finally, events are applyed by
+#   heligated.  Heligated run proper scripts
+#   and change events status in DB to applyed.
+###############################################
 
+
+# Adding events functions
 def add_event(event_id):
     event = Event(event_id=event_id)
     event.save()
@@ -27,12 +39,13 @@ def event_unreg_user():
     add_event(ACCOUNTS_UNREG_USER)
 
 
+# Confirm events functions
 def confirm_events(event_types):
     qs = Event.objects.filter(applyed=False)
     if not event_types is None:
         qs = qs.filter(event_id__in=event_types)
     events = qs.values_list('event_id').distinct()
-    events = list(set([x[0]  for x in events]))
+    events = list(set([x[0] for x in events]))
 
     message = json.dumps({'events': events})
     rabbit_send(message)
@@ -46,6 +59,7 @@ def confirm_system_start():
     confirm_events([SYSTEM_START])
 
 
+# Apply events functions
 def apply_events(event_type=None):
     qs = Event.objects.filter(applyed=False)
     if not event_type is None:
