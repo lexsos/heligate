@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from ipware.ip import get_ip
 
 from accounts.utils import user_reg_ip4, get_user_by_ip4, user_unreg_ip
-from message_bus.event import apply_user_reg
+from message_bus.event import confirm_user_reg
 from .forms import LdapAuthForm
 from .settings import CONFIG
 from .models import RedirectUrl
@@ -20,7 +20,7 @@ class LogoutView(RedirectView):
         user = get_user_by_ip4(ip_address)
         if (not user is None) and (not ip_address is None):
             user_unreg_ip(user, ip_address)
-            apply_user_reg()
+            confirm_user_reg()
 
         return reverse('accounts_web_auth')
 
@@ -51,7 +51,7 @@ class LdapAuthView(FormView):
         if user_reg_ip4(user, ip_address, CONFIG['PRIORITY']) != 0:
             self.success_url = reverse('accounts_web_error')
         else:
-            apply_user_reg()
+            confirm_user_reg()
             self.success_url = self.get_url_for_redirect()
         return super(LdapAuthView, self).form_valid(form)
 

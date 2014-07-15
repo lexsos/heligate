@@ -33,11 +33,11 @@ def confirm_events(event_types):
 
 
 def confirm_user_reg():
-    apply_events([ACCOUNTS_REG_USER, ACCOUNTS_UNREG_USER])
+    confirm_events([ACCOUNTS_REG_USER, ACCOUNTS_UNREG_USER])
 
 
 def confirm_system_start():
-    apply_events([SYSTEM_START])
+    confirm_events([SYSTEM_START])
 
 
 def apply_events(event_type=None):
