@@ -1,5 +1,6 @@
 import os
 import pika
+import json
 from subprocess import call
 from django.conf import settings
 
@@ -58,3 +59,20 @@ def rabbit_receive(channel, call_back):
         queue=queue_name,
         no_ack=True,
     )
+
+
+def event_receive_decorator(fun):
+
+    def new_receive(ch, method, properties, body):
+        data = json.loads(body)
+        return fun(data['events'])
+
+    return new_receive
+
+
+def run_events_loop(fun):
+    connection = rabbit_connection()
+    channel = rabbit_channel(connection)
+    message_receiver = event_receive_decorator(fun)
+    rabbit_receive(channel, message_receiver)
+    channel.start_consuming()

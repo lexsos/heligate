@@ -1,54 +1,50 @@
 #!/usr/bin/env python
+import django_header
 import os
 import sys
-import signal
-
-
-proj_dir = os.path.join(os.path.dirname(__file__), '..')
-proj_dir = os.path.normpath(os.path.abspath(proj_dir))
-
-if proj_dir not in sys.path:
-    sys.path.insert(0, proj_dir)
-
-os.environ['PYTHONPATH'] = proj_dir
-os.environ['DJANGO_SETTINGS_MODULE'] = 'project.settings.development'
-
-apps_root = os.path.join(proj_dir, 'apps')
-if apps_root not in sys.path:
-    sys.path.insert(0, apps_root)
-
+import threading
 
 from squid3.loger import Loger
+from message_bus.utils import run_events_loop
+from message_bus.patterns import (
+    ACCOUNTS_REG_USER,
+    ACCOUNTS_UNREG_USER,
+    SYSTEM_START,
+    SYSTEM_FULL_RECONFIG,
+)
+
+loger = Loger()
 
 
-sig_handled = False
+def loger_event(events):
+    if (ACCOUNTS_REG_USER in events) or (ACCOUNTS_UNREG_USER in events):
+        loger.users_updated()
+    if (SYSTEM_START in events) or (SYSTEM_FULL_RECONFIG in events):
+        loger.config_updated()
+    print events
 
 
-def handler(signum, frame):
-    global sig_handled
-    sig_handled = True
+def loop_run():
+    try:
+        run_events_loop(loger_event)
+    except:
+        os._exit(1)
 
 
 if __name__ == '__main__':
 
-    signal.signal(signal.SIGUSR1, handler)
-    loger = Loger()
+    event_loop_thread = threading.Thread(target=loop_run)
+    event_loop_thread.start()
 
-    while True:
+    try:
+        while True:
 
-        global sig_handled
-        if sig_handled:
-            sig_handled = False
-            loger.users_updated()
-
-        line = None
-        try:
             line = sys.stdin.readline()
-        except IOError:
-            continue
 
-        cmd_type = line[0]
-        if cmd_type == 'L':
-            loger.log(line)
-        elif cmd_type == 'F':
-            loger.flush()
+            cmd_type = line[0]
+            if cmd_type == 'L':
+                loger.log(line)
+            elif cmd_type == 'F':
+                loger.flush()
+    except:
+        os._exit(1)

@@ -1,58 +1,51 @@
 #!/usr/bin/env python
+import django_header
 import os
 import sys
-import signal
-
-
-proj_dir = os.path.join(os.path.dirname(__file__), '..')
-proj_dir = os.path.normpath(os.path.abspath(proj_dir))
-
-if proj_dir not in sys.path:
-    sys.path.insert(0, proj_dir)
-
-os.environ['PYTHONPATH'] = proj_dir
-os.environ['DJANGO_SETTINGS_MODULE'] = 'project.settings.development'
-
-apps_root = os.path.join(proj_dir, 'apps')
-if apps_root not in sys.path:
-    sys.path.insert(0, apps_root)
-
+import threading
 
 from squid3.redirector import Redirector
+from message_bus.patterns import (
+    ACCOUNTS_REG_USER,
+    ACCOUNTS_UNREG_USER,
+    SYSTEM_START,
+    SYSTEM_FULL_RECONFIG,
+)
+from message_bus.utils import run_events_loop
 
 
-sig_handled = False
+redirector = Redirector()
 
 
-def handler(signum, frame):
-    global sig_handled
-    sig_handled = True
+def redirector_event(events):
+    if (ACCOUNTS_REG_USER in events) or (ACCOUNTS_UNREG_USER in events):
+        redirector.users_updated()
+    if (SYSTEM_START in events) or (SYSTEM_FULL_RECONFIG in events):
+        redirector.config_updated()
+
+
+def loop_run():
+    try:
+        run_events_loop(redirector_event)
+    except:
+        os._exit(1)
 
 
 if __name__ == '__main__':
 
-    signal.signal(signal.SIGUSR1, handler)
-    redirector = Redirector()
+    event_loop_thread = threading.Thread(target=loop_run)
+    event_loop_thread.start()
 
-    while True:
-
-        global sig_handled
-        if sig_handled:
-            sig_handled = False
-            redirector.users_updated()
-
-        line = None
-        try:
+    try:
+        while True:
             line = sys.stdin.readline()
-        except IOError:
-            continue
-
-        if len(line) <= 1:
-            exit(0)
-
-        url = redirector.redirect(line)
-        sys.stdout.write(url)
-        sys.stdout.flush()
+            if len(line) <= 1:
+                exit(0)
+            url = redirector.redirect(line)
+            sys.stdout.write(url)
+            sys.stdout.flush()
+    except:
+        os._exit(1)
 
 
 #import pdb, sys, traceback

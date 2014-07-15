@@ -28,7 +28,13 @@ def event_unreg_user():
 
 
 def confirm_events(event_types):
-    message = json.dumps({'events': event_types})
+    qs = Event.objects.filter(applyed=False)
+    if not event_types is None:
+        qs = qs.filter(event_id__in=event_types)
+    events = qs.values_list('event_id').distinct()
+    events = list(set([x[0]  for x in events]))
+
+    message = json.dumps({'events': events})
     rabbit_send(message)
 
 
