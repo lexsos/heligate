@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from ipware.ip import get_ip
 
 from accounts.utils import user_reg_ip4, get_user_by_ip4, user_unreg_ip
-from event_log.event import apply_user_reg
+from message_bus.event import apply_user_reg
 from .forms import LdapAuthForm
 from .settings import CONFIG
 from .models import RedirectUrl

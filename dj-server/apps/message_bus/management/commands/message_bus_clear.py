@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from event_log.models import Event
+from message_bus.models import Event
 
 
 class Command(BaseCommand):

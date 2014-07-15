@@ -18,8 +18,8 @@ if apps_root not in sys.path:
     sys.path.insert(0, apps_root)
 
 
-from event_log.configurator import run
-from event_log.event import event_system_start, apply_system_start
+from message_bus.configurator import run
+from message_bus.event import event_system_start, apply_system_start
 
 if __name__ == '__main__':
     event_system_start()

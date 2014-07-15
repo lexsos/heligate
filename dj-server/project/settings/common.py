@@ -100,7 +100,7 @@ PROJECT_APPS = (
     'accounts_web',
     'firewall',
     'squid3',
-    'event_log',
+    'message_bus',
     'core',
 )
 

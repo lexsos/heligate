@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ObjectDoesNotExist
 
-from event_log.event import event_reg_user, event_unreg_user
+from message_bus.event import event_reg_user, event_unreg_user
 from .models import Ip4Entry, Profile
 
 

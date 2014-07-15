@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from ipware.ip import get_ip
 
 from accounts.utils import user_reg_ip4
-from event_log.event import apply_user_reg
+from message_bus.event import apply_user_reg
 
 from .models import DynamicAccounts
 from .settings import CONFIG

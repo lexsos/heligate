@@ -20,4 +20,4 @@ CONFIG = {
 }
 
 
-CONFIG.update(getattr(settings, 'EVENT_LOG', {}))
+CONFIG.update(getattr(settings, 'MESSAGE_BUS', {}))
