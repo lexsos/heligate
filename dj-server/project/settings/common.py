@@ -1,4 +1,5 @@
 import os
+import logging
 
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..')
@@ -172,4 +173,9 @@ ACCOUNTS_WEB = {
     'LDAP_DOMAIN': 'avia.local',
     'LDAP_TREE': 'dc=avia,dc=local',
     'LDAP_INET_GROUPT': 'inet',
+}
+
+
+HELIGATE = {
+    'LOG_LEVEL': logging.DEBUG,
 }

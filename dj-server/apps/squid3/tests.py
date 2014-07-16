@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from .utils import extruct_domain, extruct_l2_domain
-from .cache import UserCache, DomainCache
+from .cache import UserCache, DomainCache, DomainFilterCache
 
 
 class ExtructDomainTestCase(TestCase):
@@ -207,6 +207,8 @@ class UserCacheTestCase(TestCase):
             cache.get_user_by_ip('0.0.0.1')
             self.assertEqual(cache.miss_count, 2)
 
+        cache.clear()
+
     def test_loops_no_cache_miss(self):
         cache = UserCache(cache_miss=False)
         miss = 0
@@ -220,3 +222,63 @@ class UserCacheTestCase(TestCase):
             cache.get_user_by_ip('0.0.0.1')
             miss += 1
             self.assertEqual(cache.miss_count, miss)
+
+        cache.clear()
+
+
+class DomainFilterCacheTestCase(TestCase):
+
+    class FakeUser(object):
+        def __init__(self, pk):
+            super(DomainFilterCacheTestCase.FakeUser, self).__init__()
+            self.pk = pk
+
+    class FakeDomain(object):
+        def __init__(self, pk):
+            super(DomainFilterCacheTestCase.FakeDomain, self).__init__()
+            self.pk = pk
+
+    def get_user(self, pk):
+        return DomainFilterCacheTestCase.FakeUser(pk)
+
+    def get_domain(self, pk):
+        return DomainFilterCacheTestCase.FakeDomain(pk)
+
+    def test_simple(self):
+        user = self.get_user(1)
+        domain = self.get_domain(1)
+        cache = DomainFilterCache()
+
+        self.assertEqual(cache.get(user, domain), None)
+
+        cache.add(user, domain, True)
+        self.assertEqual(cache.get(user, domain), True)
+
+        cache.add(user, domain, False)
+        self.assertEqual(cache.get(user, domain), False)
+
+        cache.log_statistic()
+
+    def test_loops_cache_miss(self):
+        user = self.get_user(1)
+        domain = self.get_domain(1)
+        cache = DomainFilterCache()
+
+        for i in xrange(1000):
+            self.assertEqual(cache.get(user, domain), None)
+            self.assertEqual(cache.miss_count, i+1)
+
+        cache.log_statistic()
+
+    def test_loops_cache(self):
+        user = self.get_user(1)
+        domain = self.get_domain(1)
+        cache = DomainFilterCache()
+
+        cache.add(user, domain, True)
+
+        for i in xrange(1000):
+            self.assertEqual(cache.get(user, domain), True)
+            self.assertEqual(cache.miss_count, 0)
+
+        cache.log_statistic()

@@ -2,6 +2,7 @@ from accounts.utils import get_user_by_ip4
 from .models import L2Domain, Domain
 from .settings import CONFIG
 from .utils import extruct_l2_domain
+from core.log import logger
 
 
 DOMAIN_CACHE_SIZE = CONFIG['DOMAIN_CACHE_SIZE']
@@ -15,13 +16,28 @@ class UserCache(object):
         super(UserCache, self).__init__()
         self.users = {}
         self.miss_count = 0
+        self.query_count = 0
         self.cache_miss = cache_miss
 
+    def log_statistic(self):
+        format_str = \
+            'UserCache statistic [query count]:{0} ' \
+            '[miss count]:{1} [cache size]:{2}'
+        msg = format_str.format(
+            self.query_count,
+            self.miss_count,
+            len(self.users),
+        )
+        logger.debug(msg)
+
     def clear(self):
+        self.log_statistic()
         self.users = {}
         self.miss_count = 0
+        self.query_count = 0
 
     def get_user_by_ip(self, ip_address):
+        self.query_count += 1
         user = self.users.get(ip_address, 0)
         if user == 0:
             self.miss_count += 1
@@ -42,7 +58,20 @@ class DomainCache(object):
         self.period = DOMAIN_CACHE_SIZE*COUNTER_MUL
         self.miss_count = 0
 
+    def log_statistic(self):
+        format_str = \
+            'DomainCache statistic [query count]:{0} [miss count]:{1} ' \
+            '[L1 cache size]:{2} [L2 cache size]:{3}'
+        msg = format_str.format(
+            self.counter,
+            self.miss_count,
+            len(self.l1),
+            len(self.l2),
+        )
+        logger.debug(msg)
+
     def clear(self):
+        self.log_statistic()
         self.l1 = {}
         self.l2 = {}
         self.counter = 0
@@ -50,6 +79,7 @@ class DomainCache(object):
 
     def check_cache_size(self):
         if self.counter > self.period:
+            self.log_statistic()
             if len(self.l1) > self.max_size:
                 self.l2 = self.l1
                 self.l1 = {}
@@ -97,10 +127,24 @@ class DomainFilterCache(object):
         self.cache_l2 = {}
         self.miss_count = 0
         self.size = 0
+        self.query_count = 0
+
+    def log_statistic(self):
+        format_str = \
+            'DomainFilterCache statistic [query count]:{0} ' \
+            '[miss count]:{1} [cache size]:{2}'
+        msg = format_str.format(
+            self.query_count,
+            self.miss_count,
+            self.size,
+        )
+        logger.debug(msg)
 
     def clear(self):
+        self.log_statistic()
         self.miss_count = 0
         self.size = 0
+        self.query_count = 0
         self.cache_l2 = {}
         self.cache_l1 = {}
 
@@ -112,6 +156,8 @@ class DomainFilterCache(object):
             self.cache_l2 = cache
 
     def get(self, user, domain):
+        self.query_count += 1
+
         if user.pk in self.cache_l1:
             user_rules = self.cache_l1[user.pk]
             if domain.pk in user_rules:
