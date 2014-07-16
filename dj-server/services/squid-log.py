@@ -4,7 +4,7 @@ import os
 import sys
 import threading
 
-from squid3.loger import Loger
+from squid3.logger import Logger
 from message_bus.utils import run_events_loop
 from message_bus.patterns import (
     ACCOUNTS_REG_USER,
@@ -13,20 +13,21 @@ from message_bus.patterns import (
     SYSTEM_FULL_RECONFIG,
 )
 
-loger = Loger()
+
+squid3_logger = Logger()
 
 
-def loger_event(events):
+def logger_event(events):
     if (ACCOUNTS_REG_USER in events) or (ACCOUNTS_UNREG_USER in events):
-        loger.users_updated()
+        squid3_logger.users_updated()
     if (SYSTEM_START in events) or (SYSTEM_FULL_RECONFIG in events):
-        loger.config_updated()
+        squid3_logger.config_updated()
     print events
 
 
 def loop_run():
     try:
-        run_events_loop(loger_event)
+        run_events_loop(logger_event)
     except:
         os._exit(1)
 
@@ -43,8 +44,8 @@ if __name__ == '__main__':
 
             cmd_type = line[0]
             if cmd_type == 'L':
-                loger.log(line)
+                squid3_logger.log(line)
             elif cmd_type == 'F':
-                loger.flush()
+                squid3_logger.flush()
     except:
         os._exit(1)

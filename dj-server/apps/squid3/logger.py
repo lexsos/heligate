@@ -3,10 +3,10 @@ from .cache import UserCache, DomainCache
 from .utils import extruct_domain
 
 
-class SquidLoger(object):
+class SquidLogger(object):
 
     def __init__(self, domain_cache, user_cache):
-        super(SquidLoger, self).__init__()
+        super(SquidLogger, self).__init__()
         self.records = []
         self.domain_cache = domain_cache
         self.user_cache = user_cache
@@ -40,19 +40,19 @@ class SquidLoger(object):
         self.records = []
 
 
-class Loger(object):
+class Logger(object):
 
     def __init__(self):
-        super(Loger, self).__init__()
+        super(Logger, self).__init__()
         self.user_cache = UserCache()
         self.domain_cache = DomainCache()
-        self.squid_loger = SquidLoger(self.domain_cache, self.user_cache)
+        self.squid_logger = SquidLogger(self.domain_cache, self.user_cache)
 
     def log(self, squid_string):
-        self.squid_loger.log(squid_string)
+        self.squid_logger.log(squid_string)
 
     def flush(self):
-        self.squid_loger.flush()
+        self.squid_logger.flush()
 
     def users_updated(self):
         self.user_cache.clear()
