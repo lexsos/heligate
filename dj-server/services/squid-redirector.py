@@ -12,6 +12,8 @@ from message_bus.patterns import (
     SYSTEM_FULL_RECONFIG,
 )
 from message_bus.utils import run_events_loop
+from core.log import logger
+from core.log import except_hook
 
 
 redirector = Redirector()
@@ -28,10 +30,13 @@ def loop_run():
     try:
         run_events_loop(redirector_event)
     except:
+        logger.exception('error in rederector')
         os._exit(1)
 
 
 if __name__ == '__main__':
+
+    sys.excepthook = except_hook
 
     event_loop_thread = threading.Thread(target=loop_run)
     event_loop_thread.start()
@@ -40,22 +45,12 @@ if __name__ == '__main__':
         while True:
             line = sys.stdin.readline()
             if len(line) <= 1:
-                exit(0)
+                os._exit(0)
             url = redirector.redirect(line)
             sys.stdout.write(url)
             sys.stdout.flush()
+    except KeyboardInterrupt:
+        os._exit(0)
     except:
+        logger.exception('error in rederector')
         os._exit(1)
-
-
-#import pdb, sys, traceback
-#def except_hook(exctype, value, traceback1):
-#    f = open('/tmp/squid.log', 'w')
-#    f.write(str(exctype))
-#    f.write('\n')
-#    traceback.print_tb(traceback1, file=f)
-#    f.close()
-#    sys.__excepthook__(exctype, value, traceback)
-#
-#
-#sys.excepthook = except_hook
