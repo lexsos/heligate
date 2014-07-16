@@ -14,7 +14,7 @@ class UserCache(object):
 
     def __init__(self, cache_miss=True):
         super(UserCache, self).__init__()
-        self.users = {}
+        self.cache_l1 = {}
         self.miss_count = 0
         self.query_count = 0
         self.cache_miss = cache_miss
@@ -26,24 +26,24 @@ class UserCache(object):
         msg = format_str.format(
             self.query_count,
             self.miss_count,
-            len(self.users),
+            len(self.cache_l1),
         )
         logger.debug(msg)
 
     def clear(self):
         self.log_statistic()
-        self.users = {}
+        self.cache_l1 = {}
         self.miss_count = 0
         self.query_count = 0
 
     def get_user_by_ip(self, ip_address):
         self.query_count += 1
-        user = self.users.get(ip_address, 0)
+        user = self.cache_l1.get(ip_address, 0)
         if user == 0:
             self.miss_count += 1
             user = get_user_by_ip4(ip_address)
             if (not user is None) or self.cache_miss:
-                self.users[ip_address] = user
+                self.cache_l1[ip_address] = user
         return user
 
 
@@ -51,9 +51,9 @@ class DomainCache(object):
 
     def __init__(self):
         super(DomainCache, self).__init__()
-        self.l1 = {}
-        self.l2 = {}
-        self.counter = 0
+        self.cache_l1 = {}
+        self.cache_l2 = {}
+        self.query_count = 0
         self.max_size = DOMAIN_CACHE_SIZE
         self.period = DOMAIN_CACHE_SIZE*COUNTER_MUL
         self.miss_count = 0
@@ -63,35 +63,35 @@ class DomainCache(object):
             'DomainCache statistic [query count]:{0} [miss count]:{1} ' \
             '[L1 cache size]:{2} [L2 cache size]:{3}'
         msg = format_str.format(
-            self.counter,
+            self.query_count,
             self.miss_count,
-            len(self.l1),
-            len(self.l2),
+            len(self.cache_l1),
+            len(self.cache_l2),
         )
         logger.debug(msg)
 
     def clear(self):
         self.log_statistic()
-        self.l1 = {}
-        self.l2 = {}
-        self.counter = 0
+        self.cache_l1 = {}
+        self.cache_l2 = {}
+        self.query_count = 0
         self.miss_count = 0
 
     def check_cache_size(self):
-        if self.counter > self.period:
+        if self.query_count > self.period:
             self.log_statistic()
-            if len(self.l1) > self.max_size:
-                self.l2 = self.l1
-                self.l1 = {}
-                self.counter = 0
-        self.counter += 1
+            if len(self.cache_l1) > self.max_size:
+                self.cache_l2 = self.cache_l1
+                self.cache_l1 = {}
+                self.query_count = 0
+        self.query_count += 1
 
     def get_from_cache(self, dns_name):
-        domain = self.l1.get(dns_name)
+        domain = self.cache_l1.get(dns_name)
         if domain is None:
-            domain = self.l2.get(dns_name)
+            domain = self.cache_l2.get(dns_name)
             if not domain is None:
-                self.l1[dns_name] = domain
+                self.cache_l1[dns_name] = domain
         return domain
 
     def get_l2_domain(self, dns_name):
@@ -107,7 +107,7 @@ class DomainCache(object):
         if created:
             domain.l2_domain = self.get_l2_domain(dns_name)
             domain.save()
-        self.l1[dns_name] = domain
+        self.cache_l1[dns_name] = domain
         return domain
 
     def get_domain(self, dns_name):
@@ -125,8 +125,8 @@ class DomainFilterCache(object):
         super(DomainFilterCache, self).__init__()
         self.cache_l1 = {}
         self.cache_l2 = {}
+        self.cache_size = 0
         self.miss_count = 0
-        self.size = 0
         self.query_count = 0
 
     def log_statistic(self):
@@ -136,21 +136,21 @@ class DomainFilterCache(object):
         msg = format_str.format(
             self.query_count,
             self.miss_count,
-            self.size,
+            self.cache_size,
         )
         logger.debug(msg)
 
     def clear(self):
         self.log_statistic()
         self.miss_count = 0
-        self.size = 0
+        self.cache_size = 0
         self.query_count = 0
         self.cache_l2 = {}
         self.cache_l1 = {}
 
     def check_cache_size(self):
-        self.size += 1
-        if self.size > FILTER_CACHE_SIZE:
+        self.cache_size += 1
+        if self.cache_size > FILTER_CACHE_SIZE:
             cache = self.cache_l1
             self.clear()
             self.cache_l2 = cache
