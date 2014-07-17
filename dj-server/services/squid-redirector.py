@@ -45,6 +45,7 @@ if __name__ == '__main__':
         while True:
             line = sys.stdin.readline()
             if len(line) <= 1:
+                logger.info('stoped rederector')
                 os._exit(0)
             url = redirector.redirect(line)
             sys.stdout.write(url)
