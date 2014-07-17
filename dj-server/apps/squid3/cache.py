@@ -31,7 +31,6 @@ class UserCache(object):
         logger.debug(msg)
 
     def clear(self):
-        self.log_statistic()
         self.cache_l1 = {}
         self.miss_count = 0
         self.query_count = 0
@@ -71,7 +70,6 @@ class DomainCache(object):
         logger.debug(msg)
 
     def clear(self):
-        self.log_statistic()
         self.cache_l1 = {}
         self.cache_l2 = {}
         self.query_count = 0
@@ -79,7 +77,6 @@ class DomainCache(object):
 
     def check_cache_size(self):
         if self.query_count > self.period:
-            self.log_statistic()
             if len(self.cache_l1) > self.max_size:
                 self.cache_l2 = self.cache_l1
                 self.cache_l1 = {}
@@ -141,7 +138,6 @@ class DomainFilterCache(object):
         logger.debug(msg)
 
     def clear(self):
-        self.log_statistic()
         self.miss_count = 0
         self.cache_size = 0
         self.query_count = 0

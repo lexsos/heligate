@@ -66,9 +66,11 @@ class Logger(object):
         self.profiler_time += datetime.datetime.now() - start
 
     def users_updated(self):
+        self.log_statistic()
         self.user_cache.clear()
 
     def config_updated(self):
+        self.log_statistic()
         self.user_cache.clear()
         self.domain_cache.clear()
 

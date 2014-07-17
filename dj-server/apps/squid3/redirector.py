@@ -104,9 +104,11 @@ class Redirector(object):
         return url
 
     def users_updated(self):
+        self.log_statistic()
         self.user_cache.clear()
 
     def config_updated(self):
+        self.log_statistic()
         self.user_cache.clear()
         self.domain_cache.clear()
         self.domain_filter_cache.clear()
