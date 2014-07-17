@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 
+from core.log import logger
 from message_bus.models import Event
 
 
@@ -8,5 +9,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        logger.info('start clear events entries in message_bus application')
         Event.objects.all().delete()
-        self.stdout.write('All event log entries successfully deleted')
+        logger.info('all events entries successfully deleted in message_bus application')

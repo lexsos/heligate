@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 
+from core.log import logger
 from accounts.models import Ip4Entry
 
 
@@ -8,5 +9,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        logger.info('start clear IP entries in accounts application')
         Ip4Entry.objects.all().delete()
-        self.stdout.write('All IP entries successfully deleted')
+        logger.info('all IP entries successfully deleted in accounts application')
