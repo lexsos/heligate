@@ -44,8 +44,9 @@ def confirm_events(event_types):
     qs = Event.objects.filter(applyed=False)
     if not event_types is None:
         qs = qs.filter(event_id__in=event_types)
+    qs = qs.order_by('event_id')
     events = qs.values_list('event_id').distinct()
-    events = list(set([x[0] for x in events]))
+    events = [x[0] for x in events]
 
     message = json.dumps({'events': events})
     rabbit_send(message)
