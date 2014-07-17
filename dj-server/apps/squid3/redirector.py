@@ -1,4 +1,8 @@
+import datetime
+
+from core.log import logger
 from accounts_web.utils import get_auth_url
+
 from .cache import UserCache, DomainCache, DomainFilterCache
 from .utils import (
     extruct_domain,
@@ -89,8 +93,15 @@ class Redirector(object):
             self.domain_cache,
         )
 
+        self.record_count = 0
+        self.profiler_time = datetime.timedelta()
+
     def redirect(self, squid_str):
-        return self.redirector.redirect(squid_str)
+        start = datetime.datetime.now()
+        url = self.redirector.redirect(squid_str)
+        self.profiler_time += datetime.datetime.now() - start
+        self.record_count += 1
+        return url
 
     def users_updated(self):
         self.user_cache.clear()
@@ -105,3 +116,7 @@ class Redirector(object):
         self.user_cache.log_statistic()
         self.domain_cache.log_statistic()
         self.domain_filter_cache.log_statistic()
+
+        msg = 'rederector processed {0} queries in {1} time'
+        msg = msg.format(self.record_count, self.profiler_time)
+        logger.debug(msg)

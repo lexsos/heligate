@@ -1,3 +1,7 @@
+import datetime
+
+from core.log import logger
+
 from .models import SquidLog
 from .cache import UserCache, DomainCache
 from .utils import extruct_domain
@@ -47,12 +51,19 @@ class Logger(object):
         self.user_cache = UserCache()
         self.domain_cache = DomainCache()
         self.squid_logger = SquidLogger(self.domain_cache, self.user_cache)
+        self.record_count = 0
+        self.profiler_time = datetime.timedelta()
 
     def log(self, squid_string):
+        start = datetime.datetime.now()
         self.squid_logger.log(squid_string)
+        self.profiler_time += datetime.datetime.now() - start
+        self.record_count += 1
 
     def flush(self):
+        start = datetime.datetime.now()
         self.squid_logger.flush()
+        self.profiler_time += datetime.datetime.now() - start
 
     def users_updated(self):
         self.user_cache.clear()
@@ -64,3 +75,7 @@ class Logger(object):
     def log_statistic(self):
         self.user_cache.log_statistic()
         self.domain_cache.log_statistic()
+
+        msg = 'squid3 logger processed {0} records in {1} time'
+        msg = msg.format(self.record_count, self.profiler_time)
+        logger.debug(msg)
