@@ -60,3 +60,7 @@ class Logger(object):
     def config_updated(self):
         self.user_cache.clear()
         self.domain_cache.clear()
+
+    def log_statistic(self):
+        self.user_cache.log_statistic()
+        self.domain_cache.log_statistic()

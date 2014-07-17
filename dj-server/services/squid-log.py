@@ -3,6 +3,7 @@ import django_header
 import os
 import sys
 import threading
+import signal
 
 from squid3.logger import Logger
 from message_bus.utils import run_events_loop
@@ -34,13 +35,21 @@ def loop_run():
         os._exit(1)
 
 
+def sig_handler(signum, frame):
+    logger.debug('squid3 logger caught siglan {0}'.format(signum))
+
+
 if __name__ == '__main__':
 
+    logger.info('squid3 logger starting')
     sys.excepthook = except_hook
+
+    signal.signal(signal.SIGTERM, sig_handler)
 
     event_loop_thread = threading.Thread(target=loop_run)
     event_loop_thread.start()
 
+    logger.info('squid3 logger started')
     try:
         while True:
             line = sys.stdin.readline()
@@ -49,7 +58,10 @@ if __name__ == '__main__':
                 squid3_logger.log(line)
             elif cmd_type == 'F':
                 squid3_logger.flush()
-    except KeyboardInterrupt:
+    except (IOError, KeyboardInterrupt):
+        logger.info('squid3 logger stopping')
+        squid3_logger.log_statistic()
+        logger.info('squid3 logger stoped')
         os._exit(0)
     except:
         logger.exception('error in squid3 logger')
