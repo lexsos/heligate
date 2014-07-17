@@ -1,6 +1,6 @@
 from django.conf import settings
 import logging
-from  logging.handlers import SysLogHandler
+from logging.handlers import SysLogHandler
 
 
 CONFIG = {
