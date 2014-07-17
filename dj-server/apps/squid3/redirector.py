@@ -100,3 +100,8 @@ class Redirector(object):
         self.domain_cache.clear()
         self.domain_filter_cache.clear()
         self.redirect_rules.rebuild_rules()
+
+    def log_statistic(self):
+        self.user_cache.log_statistic()
+        self.domain_cache.log_statistic()
+        self.domain_filter_cache.log_statistic()

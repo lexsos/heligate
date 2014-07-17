@@ -36,16 +36,20 @@ def loop_run():
 
 if __name__ == '__main__':
 
+    logger.info('rederector starting')
     sys.excepthook = except_hook
 
     event_loop_thread = threading.Thread(target=loop_run)
     event_loop_thread.start()
 
+    logger.info('rederector started')
     try:
         while True:
             line = sys.stdin.readline()
             if len(line) <= 1:
-                logger.info('stoped rederector')
+                logger.info('rederector stopping')
+                redirector.log_statistic()
+                logger.info('rederector stoped')
                 os._exit(0)
             url = redirector.redirect(line)
             sys.stdout.write(url)
