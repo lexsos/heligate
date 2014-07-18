@@ -47,6 +47,7 @@ if __name__ == '__main__':
         while True:
             line = sys.stdin.readline()
             if len(line) <= 1:
+                logger.debug('rederector received blank line')
                 logger.info('rederector stopping')
                 redirector.log_statistic()
                 logger.info('rederector stoped')

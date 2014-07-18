@@ -1,6 +1,7 @@
 from django.conf import settings
 from .patterns import (
     SYSTEM_START,
+    SYSTEM_STOP,
     ACCOUNTS_REG_USER,
     ACCOUNTS_UNREG_USER,
 )
@@ -8,6 +9,7 @@ from .patterns import (
 
 EVENTS = {
     SYSTEM_START: 'start.sh',
+    SYSTEM_STOP: 'stop.sh',
     ACCOUNTS_REG_USER: 'connects-update.sh',
     ACCOUNTS_UNREG_USER: 'connects-update.sh',
 }

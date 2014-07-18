@@ -8,7 +8,12 @@ import pika
 import time
 from optparse import OptionParser
 
-from message_bus.event import event_system_start, apply_system_start
+from message_bus.event import (
+    event_system_start,
+    event_system_stop,
+    apply_system_start,
+    apply_system_stop,
+)
 from message_bus.event import apply_events
 from message_bus.utils import run_events_loop
 from core.log import except_hook, logger
@@ -48,6 +53,9 @@ class Heligated(Daemon):
 
             if wait_timer < 1000:
                 wait_timer += 1
+
+        event_system_stop()
+        apply_system_stop()
 
         logger.info('heligated stoped')
 

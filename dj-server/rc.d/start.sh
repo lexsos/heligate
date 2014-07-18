@@ -7,3 +7,6 @@
 ../manage.py firewall_gen_config | /bin/sh
 ../manage.py squid3_intercept_conf | /bin/sh
 ../manage.py squid3_update_users | /bin/sh
+
+/etc/init.d/squid3 stop
+/etc/init.d/squid3 start

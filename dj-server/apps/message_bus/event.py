@@ -5,6 +5,7 @@ from .settings import CONFIG
 from .utils import run_scripts, rabbit_send
 from .patterns import (
     SYSTEM_START,
+    SYSTEM_STOP,
     ACCOUNTS_REG_USER,
     ACCOUNTS_UNREG_USER,
 )
@@ -29,6 +30,10 @@ def add_event(event_id):
 
 def event_system_start():
     add_event(SYSTEM_START)
+
+
+def event_system_stop():
+    add_event(SYSTEM_STOP)
 
 
 def event_reg_user():
@@ -81,3 +86,7 @@ def apply_user_reg():
 
 def apply_system_start():
     apply_events([SYSTEM_START])
+
+
+def apply_system_stop():
+    apply_events([SYSTEM_STOP])
