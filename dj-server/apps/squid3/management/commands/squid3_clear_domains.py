@@ -1,4 +1,3 @@
-import datetime
 from django.core.management.base import BaseCommand
 
 from core.log import logger
@@ -15,7 +14,7 @@ class Command(BaseCommand):
         del_count = 0
         total_count = qs.count()
 
-        for (counter, record)  in enumerate(qs):
+        for (counter, record) in enumerate(qs):
             console_progrees(total_count, counter + 1, self.stdout)
             if has_related_objects(record):
                 continue
@@ -32,4 +31,3 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.clear_model(Domain)
         self.clear_model(L2Domain)
-
