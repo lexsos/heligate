@@ -62,10 +62,11 @@ class Heligated(Daemon):
 
 def sig_handler(signum, frame):
     global running
-    running = False
-    logger.debug('heligated caught siglan {0}'.format(signum))
-    logger.info('heligated stopping')
-    os.exit(0)
+    if running:
+        running = False
+        logger.debug('heligated caught siglan {0}'.format(signum))
+        logger.info('heligated stopping')
+        os.exit(0)
 
 
 def get_parser():
