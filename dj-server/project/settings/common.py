@@ -5,6 +5,8 @@ import logging
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..')
 PROJECT_ROOT = os.path.normpath(os.path.abspath(PROJECT_ROOT))
 
+HELIGATE_ROOT = os.path.join(PROJECT_ROOT, '..', '..')
+HELIGATE_ROOT = os.path.normpath(os.path.abspath(HELIGATE_ROOT))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),

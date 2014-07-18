@@ -2,16 +2,19 @@ import re
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
+from django.conf import settings
 
 from core.utils import normalize_script
-from firewall.settings import CONFIG
+from firewall.settings import CONFIG as CONFIG_FIREWALL
 from accounts.utils import get_ip4_list
+
 from .models import (
     ExcludedFilter,
     ExcludedUser,
     InterceptFilter,
     DomainFilterKit,
 )
+from .settings import CONFIG
 
 
 def gen_intercept_conf():
@@ -19,7 +22,7 @@ def gen_intercept_conf():
     context = {
         'excluded_filter_list': ExcludedFilter.objects.filter(enabled=True),
         'intercept_filter_list': InterceptFilter.objects.filter(enabled=True),
-        'mark': CONFIG['DIVERT_MARK'],
+        'mark': CONFIG_FIREWALL['DIVERT_MARK'],
     }
     conf = render_to_string('squid3/intercept_conf.sh', context)
     return normalize_script(conf)
@@ -35,6 +38,14 @@ def gen_excluded_users():
     }
     conf = render_to_string('squid3/excluded_users.sh', context)
     return normalize_script(conf)
+
+
+def gen_squid_conf():
+    context = {
+        'HELIGATE_ROOT': settings.HELIGATE_ROOT,
+    }
+    context.update(CONFIG)
+    return render_to_string('squid3/squid.conf', context)
 
 
 re_url = re.compile(r'^https?://(?P<domain>[^ \f\n\r\t\v/:]+)')

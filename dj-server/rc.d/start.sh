@@ -9,4 +9,5 @@
 ../manage.py squid3_update_users | /bin/sh
 
 /etc/init.d/squid3 stop
+../manage.py squid3_conf
 /etc/init.d/squid3 start
