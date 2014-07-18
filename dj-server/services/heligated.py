@@ -75,7 +75,7 @@ def get_args():
         '-a',
         '--action',
         help='[stop | start | interactive]',
-        choices=['stop', 'start', 'interactive',],
+        choices=['stop', 'start', 'interactive'],
         action='store',
     )
 
