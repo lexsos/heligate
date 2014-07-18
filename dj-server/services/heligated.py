@@ -69,25 +69,17 @@ def sig_handler(signum, frame):
         os.exit(0)
 
 
-def get_parser():
+def get_args():
     parser = OptionParser()
     parser.add_option(
-        '-d', '--daemon',
-        help='run as daemon',
-        action='store_true',
-    )
-    parser.add_option(
-        '-s', '--stop',
-        help='stop daemon',
-        action='store_true',
-    )
-    parser.add_option(
-        '-i', '--interactive',
-        help='run interactive',
-        action='store_true',
+        '-a',
+        '--action',
+        help='[stop | start | interactive]',
+        choices=['stop', 'start', 'interactive',],
+        action='store',
     )
 
-    return parser
+    return parser.parse_args()
 
 if __name__ == '__main__':
 
@@ -95,13 +87,11 @@ if __name__ == '__main__':
     signal.signal(signal.SIGTERM, sig_handler)
 
     heligated = Heligated('/var/run/heligate/heligated.pid')
-    parser = get_parser()
+    (options, args) = get_args()
 
-    (options, args) = parser.parse_args()
-
-    if options.daemon:
+    if options.action == 'start':
         heligated.start()
-    elif options.stop:
+    elif options.action == 'stop':
         heligated.stop()
-    elif options.interactive:
+    elif options.action == 'interactive':
         heligated.run()
