@@ -8,10 +8,10 @@ class Command(BaseCommand):
     help = 'Generate config for firewall'
 
     def handle(self, *args, **options):
-        logger.info('start generate config for iptables in firewall application')
+        logger.debug('start generate config for iptables in firewall application')
 
         config = get_all_conf()
         self.stdout.write(config)
 
         logger.debug(config)
-        logger.info('config successfully generated for iptables in firewall application')
+        logger.debug('config successfully generated for iptables in firewall application')

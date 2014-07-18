@@ -9,6 +9,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        logger.info('start clear IP entries in accounts application')
+        logger.debug('start clear IP entries in accounts application')
         Ip4Entry.objects.all().delete()
-        logger.info('all IP entries successfully deleted in accounts application')
+        logger.debug('all IP entries successfully deleted in accounts application')

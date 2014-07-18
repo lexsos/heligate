@@ -8,10 +8,10 @@ class Command(BaseCommand):
     help = 'Generate config for squid3 excluded users'
 
     def handle(self, *args, **options):
-        logger.info('start generate excluded users config in squid3 application')
+        logger.debug('start generate excluded users config in squid3 application')
 
         config = gen_excluded_users()
         self.stdout.write(config)
 
         logger.debug(config)
-        logger.info('excluded users config successfully generated in squid3 application')
+        logger.debug('excluded users config successfully generated in squid3 application')

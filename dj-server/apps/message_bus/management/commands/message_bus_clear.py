@@ -9,6 +9,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        logger.info('start clear events entries in message_bus application')
+        logger.debug('start clear events entries in message_bus application')
         Event.objects.all().delete()
-        logger.info('all events entries successfully deleted in message_bus application')
+        logger.debug('all events entries successfully deleted in message_bus application')

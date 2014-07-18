@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        logger.info('start register IP in accounts_static_ip application')
+        logger.debug('start register IP in accounts_static_ip application')
 
         count = 0
         for static_ip in StaticIp4.objects.all():
@@ -19,4 +19,4 @@ class Command(BaseCommand):
         msg = 'static ip[{0}] successfully registered in ' \
             'accounts_static_ip application'
         msg = msg.format(count)
-        logger.info(msg)
+        logger.debug(msg)

@@ -8,10 +8,10 @@ class Command(BaseCommand):
     help = 'Generate sh script for update classifier chain'
 
     def handle(self, *args, **options):
-        logger.info('start generate user classifier in firewall application')
+        logger.debug('start generate user classifier in firewall application')
 
         config = get_update_classifier()
         self.stdout.write(config)
 
         logger.debug(config)
-        logger.info('user classifier successfully generated  in firewall application')
+        logger.debug('user classifier successfully generated  in firewall application')

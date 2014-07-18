@@ -12,9 +12,15 @@ class Command(BaseCommand):
         logger.debug('start generating config for squid3 daemon in squid3 application')
 
         config = gen_squid_conf()
-        f = open(CONFIG['SQUID_CONF_FILE'], 'w')
-        f.write(config)
-        f.close()
-
         logger.debug(config)
-        logger.debug('config for squid3 daemon successfully generated in squid3 application')
+
+        conf_file_name = CONFIG['SQUID_CONF_FILE']
+        try:
+            f = open(conf_file_name, 'w')
+            f.write(config)
+            f.close()
+        except IOError:
+            msg = "can't write file {0}".format(conf_file_name)
+            logger.error(msg)
+        else:
+            logger.debug('config for squid3 daemon successfully generated in squid3 application')

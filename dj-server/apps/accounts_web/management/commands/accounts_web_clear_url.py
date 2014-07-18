@@ -9,6 +9,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        logger.info('start clear URL entries in accounts_web application')
+        logger.debug('start clear URL entries in accounts_web application')
         RedirectUrl.objects.all().delete()
-        logger.info('all URL entries successfully deleted in accounts_web application')
+        logger.debug('all URL entries successfully deleted in accounts_web application')
