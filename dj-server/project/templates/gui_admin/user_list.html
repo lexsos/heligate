@@ -1,0 +1,60 @@
+{% extends "gui_admin/base.html" %}
+
+
+{% block accounts_active %}active{% endblock %}
+
+
+{% block main_content %}
+  <h2>Users</h2>
+
+  <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Full Name</th>
+          <th>Username</th>
+          <th>Group</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>InetUsers</td>
+          <td>
+            <span class="glyphicon glyphicon-trash"></span>
+            <span class="glyphicon glyphicon-edit"></span>
+            <span class="glyphicon glyphicon-play"></span>
+            <span class="glyphicon glyphicon-pause"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>InetUsers</td>
+          <td>
+            <span class="glyphicon glyphicon-trash"></span>
+            <span class="glyphicon glyphicon-edit"></span>
+            <span class="glyphicon glyphicon-play"></span>
+            <span class="glyphicon glyphicon-pause"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Alexander</td>
+          <td>user</td>
+          <td>InetUsers</td>
+          <td>
+            <span class="glyphicon glyphicon-trash"></span>
+            <span class="glyphicon glyphicon-edit"></span>
+            <span class="glyphicon glyphicon-play"></span>
+            <span class="glyphicon glyphicon-pause"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+{% endblock %}
