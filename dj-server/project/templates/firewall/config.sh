@@ -66,5 +66,10 @@ ip -f inet rule add from all lookup default pref 32767
 ip -f inet rule add fwmark {{ divert_mark }} lookup {{ divert_route_table }}
 ip -f inet route add local default dev {{ internal_if }} table {{ divert_route_table }}
 
+# включаем NAT
+{% for nat_if in nat_if_list %}
+    iptables -t nat -A POSTROUTING -o {{ nat_if.if_name }} -j MASQUERADE
+{% endfor %}
+
 # Разрешаем пересылку
 echo 1 > /proc/sys/net/ipv4/ip_forward

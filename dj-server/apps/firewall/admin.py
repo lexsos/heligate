@@ -27,6 +27,7 @@ class NetInterfaceAdmin(admin.ModelAdmin):
 
     list_display = (
         'if_name',
+        'use_nat',
         'description',
     )
 

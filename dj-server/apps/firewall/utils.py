@@ -53,11 +53,15 @@ def get_all_conf():
     from .models import NetInterface
     internal_if = NetInterface.objects.filter(if_type=INTERNAL_IF)[0]
     internal_if = internal_if.if_name
+
+    nat_if_list = NetInterface.objects.filter(use_nat=True)
+
     context = {
         'group_list': Group.objects.all(),
         'divert_mark': CONFIG['DIVERT_MARK'],
         'divert_route_table': CONFIG['DIVERT_ROUTE_TABLE'],
         'internal_if': internal_if,
+        'nat_if_list': nat_if_list,
     }
     conf = render_to_string('firewall/config.sh', context)
     return normalize_script(conf)

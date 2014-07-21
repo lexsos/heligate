@@ -81,6 +81,10 @@ class NetInterface(models.Model):
         verbose_name=_('description'),
         blank=True,
     )
+    use_nat = models.BooleanField(
+        verbose_name=_('use nat'),
+        default=False,
+    )
 
     def __unicode__(self):
         return u'{0}:{1}'.format(self.if_name, self.description)
