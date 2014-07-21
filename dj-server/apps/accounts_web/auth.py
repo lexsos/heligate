@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 
-from accounts.utils import create_account
+from accounts.utils import create_account, check_profile
 from .settings import CONFIG
 from .auth_ldap import LdapAuthHelper
 from .auth_buildin import BuildinAuthHelper
@@ -36,6 +36,12 @@ class AuthHelper(object):
     def get_or_create_user(self, user_info):
         try:
             user = User.objects.get(username=user_info['user_name'])
+            check_profile(
+                user_info['user_name'],
+                CONFIG['DEFAULT_IP4'],
+                CONFIG['DEFAULT_GROUP'],
+                user_info['full_name'],
+            )
             return user
         except ObjectDoesNotExist:
             return create_account(

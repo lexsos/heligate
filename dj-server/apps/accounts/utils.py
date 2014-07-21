@@ -63,18 +63,26 @@ def user_unreg_ip(user, ip_address=None):
     event_unreg_user()
 
 
+def check_profile(username, max_ip4_entry, group_name, full_name=''):
+    user = User.objects.get(username=username)
+    try:
+        user.profile
+    except ObjectDoesNotExist:
+        group = Group.objects.get(name=group_name)
+        new_profile = Profile(
+            user=user,
+            full_name=full_name,
+            max_ip4_entry=max_ip4_entry,
+            group=group
+        )
+        new_profile.save()
+
+
 def create_account(username, max_ip4_entry, group_name, full_name=''):
     new_user = User(username=username, is_active=True)
     new_user.save()
 
-    group = Group.objects.get(name=group_name)
-    new_profile = Profile(
-        user=new_user,
-        full_name=full_name,
-        max_ip4_entry=max_ip4_entry,
-        group=group
-    )
-    new_profile.save()
+    check_profile(username, max_ip4_entry, group_name, full_name)
 
     return new_user
 
