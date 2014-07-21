@@ -4,9 +4,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from accounts.utils import create_account
 from .settings import CONFIG
 from .auth_ldap import LdapAuthHelper
+from .auth_buildin import BuildinAuthHelper
 
 
-helper_classes = (LdapAuthHelper, )
+helper_classes = (LdapAuthHelper, BuildinAuthHelper)
 
 
 class AuthHelper(object):
