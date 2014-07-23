@@ -7,13 +7,26 @@
 {% block main_content %}
   <h2>Users</h2>
 
-  <table class="table table-hover">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#user_list" role="tab" data-toggle="tab">List</a></li>
+    <li><a href="#user_add" role="tab" data-toggle="tab">New user</a></li>
+  </ul>
+
+
+<!-- Tab panes -->
+<div class="tab-content">
+
+  <div class="tab-pane active" id="user_list">
+    <br>
+    <table class="table table-hover">
       <thead>
         <tr>
           <th>#</th>
-          <th>Full Name</th>
+          <th>Full Name <span class="glyphicon glyphicon-chevron-up"></span></th>
           <th>Username</th>
           <th>Group</th>
+          <th>State</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -23,11 +36,13 @@
           <td>Mark</td>
           <td>Otto</td>
           <td>InetUsers</td>
+          <td><span class="glyphicon glyphicon-play green"></span></td>
           <td>
-            <span class="glyphicon glyphicon-trash"></span>
-            <span class="glyphicon glyphicon-edit"></span>
-            <span class="glyphicon glyphicon-play"></span>
-            <span class="glyphicon glyphicon-pause"></span>
+          <div class="btn-group">
+            <span class="glyphicon glyphicon-trash btn btn-danger"></span>
+            <span class="glyphicon glyphicon-edit btn btn-primary"></span>
+            <span class="glyphicon glyphicon-pause red btn btn-default"></span>
+          </div>
           </td>
         </tr>
         <tr>
@@ -35,11 +50,13 @@
           <td>Jacob</td>
           <td>Thornton</td>
           <td>InetUsers</td>
+          <td><span class="glyphicon glyphicon-play green"></span></td>
           <td>
-            <span class="glyphicon glyphicon-trash"></span>
-            <span class="glyphicon glyphicon-edit"></span>
-            <span class="glyphicon glyphicon-play"></span>
-            <span class="glyphicon glyphicon-pause"></span>
+          <div class="btn-group">
+            <span class="glyphicon glyphicon-trash btn btn-danger"></span>
+            <span class="glyphicon glyphicon-edit btn btn-primary"></span>
+            <span class="glyphicon glyphicon-pause red btn btn-default"></span>
+          </div>
           </td>
         </tr>
         <tr>
@@ -47,14 +64,57 @@
           <td>Alexander</td>
           <td>user</td>
           <td>InetUsers</td>
+          <td><span class="glyphicon glyphicon-pause red"></span></td>
           <td>
-            <span class="glyphicon glyphicon-trash"></span>
-            <span class="glyphicon glyphicon-edit"></span>
-            <span class="glyphicon glyphicon-play"></span>
-            <span class="glyphicon glyphicon-pause"></span>
+          <div class="btn-group">
+            <span class="glyphicon glyphicon-trash btn btn-danger"></span>
+            <span class="glyphicon glyphicon-edit btn btn-primary"></span>
+            <span class="glyphicon glyphicon-play green btn btn-default"></span>
+          </div>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="tab-pane" id="user_add">
+    <br>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Full name *</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Login *</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Group *</label>
+        <div class="col-sm-3">
+            <select class="form-control" id="">
+              <option value="1">InetUsers</option>
+              <option value="2">Admins</option>
+            </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 control-label">Count ip4 *</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
 
 {% endblock %}
